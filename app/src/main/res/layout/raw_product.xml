@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Rl_Product"
+    android:layout_width="200dp"
+    android:layout_height="310dp"
+    android:background="@drawable/rectengal">
+
+
+    <ImageView
+        android:id="@+id/Img_product"
+        android:layout_width="96dp"
+        android:layout_height="92dp"
+       android:layout_centerHorizontal="true"
+
+        android:layout_marginTop="39dp"
+        android:background="@drawable/rectengal"
+        android:padding="2dp"
+        android:src="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/Txt_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="11dp"
+        android:background="@drawable/rectangle1"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="2dp"
+        android:text="15% off"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/Txt_Product_nam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Img_product"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Dolo 650"
+        android:textColor="@color/black"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/Txt_Product_dis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Txt_Product_nam"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="relieve pain and fever "
+        android:textSize="16dp" />
+
+    <RelativeLayout
+        android:id="@+id/relativlayoutprice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Txt_Product_dis"
+        android:layout_marginTop="@dimen/_10sdp"
+
+        >
+
+        <TextView
+            android:id="@+id/Pro_mrp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/Pro_price"
+            android:background="@drawable/line"
+            android:text="₹250"
+            android:textColor="#B81616"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/Pro_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="70dp"
+
+            android:text="₹125"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/Txt_add"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/relativlayoutprice"
+
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+
+        android:layout_marginTop="20dp"
+
+        android:background="@color/primary"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="ADD"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/rladdtocart"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/relativlayoutprice"
+
+        android:layout_marginTop="20dp"
+
+        android:layout_gravity="center"
+        android:layout_marginStart="50dp"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imgMinus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="9dp"
+            android:gravity="center"
+            android:src="@drawable/minus"
+            android:tint="@color/white"
+
+
+
+            />
+
+        <TextView
+            android:id="@+id/tvquantity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_toEndOf="@id/imgPlus"
+            android:layout_toStartOf="@id/imgMinus"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:id="@+id/imgPlus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="7dp"
+            android:src="@drawable/add"
+            android:tint="@color/white" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RL_Outofstock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/Tet_Outofstock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="78dp"
+            android:layout_marginBottom="213dp"
+            android:background="#E13E3E"
+            android:gravity="center"
+            android:text="Out of stock" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

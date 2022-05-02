@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyMedical</string>
+    <string name="name_splash">
+    <font color="#0000FF">My</font>
+    <font color="#008000">Madical</font>
+
+</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+</resources>
