@@ -99,7 +99,7 @@
                     android:layout_marginBottom="3dp"
                     android:gravity="center"
                     android:paddingLeft="4dp"
-                    android:text="Have a Doctor's Prescription?"
+                    android:text="Find your Medicines                 "
                     android:textColor="#979797"
                     android:textSize="14dp" />
 
@@ -107,8 +107,9 @@
                     android:id="@+id/Btn_upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_marginLeft="20dp"
-                    android:text="upload" />
+                    android:text="Search" />
 
             </LinearLayout>
 

@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.164" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/ic_baseline_done_24.xml" value="0.164" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/rectengal.xml" value="0.1775" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/shape_overlay_round_dark.xml" value="0.164" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_categorylist.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_dashboard.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_my_accounts.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_order.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_order_details.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_spleshsceen.xml" value="0.13994565217391305" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_user_profile_edit.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/app_bar.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/layout_custom_toolbar_trasparent.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/main_activity.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/nav_drawer_main_left.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/raw_category.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/raw_catlist.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/raw_product.xml" value="0.264" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/raw_subcategory.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/row_myorder.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/row_orderdetails.xml" value="0.23854166666666668" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

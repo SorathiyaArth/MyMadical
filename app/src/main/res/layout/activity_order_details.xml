@@ -140,7 +140,7 @@
                             android:layout_toRightOf="@+id/txtDeldateText"
                             android:maxLines="1"
                             android:text="Penindg "
-                            android:textColor="#1f7638"
+                            android:textColor="#FF8400"
                             android:textSize="@dimen/_13sdp" />
 
 
@@ -178,7 +178,7 @@
                             android:layout_toRightOf="@+id/txtStatusText"
                             android:maxLines="1"
                             android:text="Penindg "
-                            android:textColor="#1f7638"
+                            android:textColor="#FF8400"
                             android:textSize="@dimen/_14sdp" />
 
 
@@ -216,7 +216,7 @@
                             android:layout_toRightOf="@+id/txtPayStatusText"
                             android:maxLines="1"
                             android:text="Penindg "
-                            android:textColor="#1f7638"
+                            android:textColor="#FF8400"
                             android:textSize="@dimen/_14sdp" />
 
 
@@ -471,7 +471,7 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_15sdp"
                             android:paddingRight="@dimen/_15sdp"
-                            android:text="12454212"
+                            android:text="0.00"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13sdp" />
                     </LinearLayout>
@@ -503,7 +503,7 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_15sdp"
                             android:paddingRight="@dimen/_15sdp"
-                            android:text="12454212"
+                            android:text="0.00"
                             android:textColor="#269145"
                             android:textSize="@dimen/_13sdp" />
                     </LinearLayout>
@@ -535,7 +535,7 @@
                             android:paddingLeft="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_15sdp"
                             android:paddingRight="@dimen/_15sdp"
-                            android:text="12454212"
+                            android:text="0.00"
                             android:textColor="#269145"
                             android:textSize="@dimen/_13sdp" />
                     </LinearLayout>

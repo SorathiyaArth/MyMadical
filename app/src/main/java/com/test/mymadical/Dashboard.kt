@@ -1,19 +1,20 @@
 package com.test.mymadical
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
@@ -33,8 +34,6 @@ import com.test.mymadical.model.CategoryTblItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import kotlin.collections.ArrayList
 
 class Dashboard : AppCompatActivity() {
     var toolbar: Toolbar? = null
@@ -48,6 +47,8 @@ class Dashboard : AppCompatActivity() {
     lateinit var realtiveNaveHeader: RelativeLayout
     lateinit var relativeContactUs: RelativeLayout
     lateinit var relativeMyOrders: RelativeLayout
+    lateinit var relativeShareApp: RelativeLayout
+    lateinit var relativeRateApp: RelativeLayout
     lateinit var relativeOffer: RelativeLayout
     lateinit var relativeMyAccount: RelativeLayout
     lateinit var relativeAbout: RelativeLayout
@@ -59,13 +60,14 @@ class Dashboard : AppCompatActivity() {
     lateinit var Btn_upload: Button
     lateinit var imgsearch: ImageView
     lateinit var imgUserProfile: ImageView
-    val main_key = "my_pref"
     val login_key = "is_login"
-    val custID_key = "custID_key"
 
     val islogin = "1"
     var sherdlogin: String = ""
     var sherdcustID: String = ""
+    val main_key = "my_pref"
+    val custID_key = "custID_key"
+
     val uname_key = "uname"
     val unumber_key = "unumber"
     val uemail_key = "uemail"
@@ -108,21 +110,59 @@ class Dashboard : AppCompatActivity() {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
+        relativeRateApp.setOnClickListener {
+              val uri: Uri = Uri.parse("market://details?id=$packageName")
+             val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+             // To count with Play market backstack, After pressing back button,
+             // to taken back to our application, we need to add following flags to intent.
+             goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                     Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                     Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+             try {
+                 startActivity(goToMarket)
+             } catch (e: ActivityNotFoundException) {
+                 startActivity(Intent(Intent.ACTION_VIEW,
+                     Uri.parse("http://play.google.com/store/apps/details?id=$packageName")))
+             }
+        }
+        relativeShareApp.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My application name")
+            var shareMessage = "\nLet me recommend you this application\n\n"
+            shareMessage =
+                """
+                ${shareMessage}https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}
+                
+                
+                """.trimIndent()
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+            startActivity(Intent.createChooser(shareIntent, "choose one"))
+
+
+
+
+
+
+
+
+
+        }
         val preferences: SharedPreferences = this.getSharedPreferences(main_key, MODE_PRIVATE)
 
         val sherdiscustID = preferences.getString(custID_key, "afd")
         val shareduname = preferences.getString(uname_key, "Guest User")
         val cartitemcount = preferences.getString(ucart_key, "0")
         val sherdnumber = preferences.getString(unumber_key, "**********")
-        val sherdimage = preferences.getString(uimage_key, "")
+        val sherdimage = preferences.getString(uimage_key, "https://www.kindpng.com/picc/m/495-4952535_create-digital-profile-icon-blue-user-profile-icon.png")
 
 
-        Log.e("jbhhfg", cartitemcount.toString() +"  dash")
+        Log.e("jbhhfg", sherdimage.toString() +"  dash")
 
         txtName.text = shareduname
         txtMobile.text = sherdnumber
         tvmytotalitems.text = cartitemcount
-        Glide.with(this).load(sherdimage)
+        Glide.with(this).load(R.drawable.img_default_user_icon)
             .placeholder(R.drawable.img_default_user_icon)
             .error(R.drawable.img_default_user_icon)
             .fallback(R.drawable.img_default_user_icon)
@@ -190,6 +230,10 @@ class Dashboard : AppCompatActivity() {
 
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+            }else{
+                val intent = Intent(this, MyAccounts::class.java)
+                startActivity(intent)
+
             }
 
 
@@ -278,6 +322,8 @@ class Dashboard : AppCompatActivity() {
 
     private fun Ids() {
         toolbar = findViewById(R.id.toolbar)
+        relativeShareApp = findViewById(R.id.relativeShareApp)
+        relativeRateApp = findViewById(R.id.relativeRateApp)
         relativeOffer = findViewById(R.id.relativeOffer)
         relativeContactUs = findViewById(R.id.relativeContactUs)
         relativeAbout = findViewById(R.id.relativeAbout)
@@ -431,12 +477,12 @@ class Dashboard : AppCompatActivity() {
             val shareduname = preferences.getString(uname_key, "Guest User")
             val cartitemcount = preferences.getString(ucart_key, "0")
             val sherdnumber = preferences.getString(unumber_key, "**********")
-            val image = preferences.getString(uimage_key, R.drawable.img_default_user_icon.toString())
+            val image = preferences.getString(uimage_key, "")
 
             txtName.text = shareduname
             txtMobile.text = sherdnumber
             tvmytotalitems.text = cartitemcount
-            Glide.with(this).load(image).into(imgUserProfile)
+            Glide.with(this).load(R.drawable.img_default_user_icon).into(imgUserProfile)
         }
 
     }

@@ -17,8 +17,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMadical">
-        <activity android:name=".Activity_order_details"></activity>
-        <activity android:name=".Activity_order" />
+        <activity
+            android:name=".ActivityUserProfileEdit"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".MyAccounts"
+            android:exported="false"
+            android:label="My Account"/>
+        <activity
+            android:name=".Activity_order_details"
+            android:label="Orders Details" />
+        <activity
+            android:name=".Activity_order"
+            android:label="My Orders" />
         <activity android:name=".ActivityOrderReview" />
         <activity android:name=".ActivityAddEditAddress" />
         <activity

@@ -1,6 +1,7 @@
 package com.test.mymadical
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -32,8 +33,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ActivityMyAddress : AppCompatActivity() {
-var CustId :String = ""
 var total :String = ""
+    var sherdiscustid = ""
+    val main_key = "my_pref"
+    val custID_key = "custID_key"
     lateinit var recyclerviewMyAddresses:RecyclerView
     lateinit var rlNoAddress:RelativeLayout
     lateinit var txtAddAddress:TextView
@@ -54,7 +57,8 @@ var total :String = ""
         recyclerviewMyAddresses = findViewById(R.id.recyclerviewMyAddresses)
 
         recyclerviewMyAddresses.layoutManager = LinearLayoutManager(this ,LinearLayoutManager.VERTICAL , false)
-        CustId = intent.getStringExtra("CustId").toString()
+        val preferences: SharedPreferences = this.getSharedPreferences(main_key, MODE_PRIVATE)
+        sherdiscustid = preferences.getString(custID_key, "").toString()
         total = intent.getStringExtra("total").toString()
 
         txtAddAddress.setOnClickListener {
@@ -110,7 +114,7 @@ var total :String = ""
 
         val creation: GetAddressInfoInterface =
             Retroclient.getSingleTonClient()!!.create(GetAddressInfoInterface::class.java)
-        val call = creation.getaddressdetaildata(CustId)
+        val call = creation.getaddressdetaildata(sherdiscustid)
         call.enqueue(object : Callback<ModelAddressDisplayInfo> {
             override fun onResponse(call: Call<ModelAddressDisplayInfo>, response: Response<ModelAddressDisplayInfo>) {
 
@@ -152,7 +156,7 @@ var total :String = ""
                                     Log.e("PSKSKKS", tvaddress)
                                     val intent =
                                         Intent(this@ActivityMyAddress, ActivityOrderReview::class.java)
-                                    intent.putExtra("CustId",CustId )
+                                    intent.putExtra("CustId",sherdiscustid )
                                     intent.putExtra("addid", listaddress.get(position)?.addressId)
                                     intent.putExtra("name", listaddress.get(position)?.name)
                                     intent.putExtra("content", listaddress.get(position)?.number)
@@ -217,7 +221,7 @@ var total :String = ""
                     R.id.itemedit -> {
 
                         val intent = Intent(this@ActivityMyAddress, ActivityAddEditAddress::class.java)
-                        intent.putExtra("CustId", CustId)
+                        intent.putExtra("CustId", sherdiscustid)
                         intent.putExtra("addid", listaddress?.get(position)?.addressId)
                         intent.putExtra("name", listaddress?.get(position)?.name)
                         intent.putExtra("content", listaddress?.get(position)?.number)

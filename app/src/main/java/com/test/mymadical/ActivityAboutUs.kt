@@ -13,7 +13,12 @@ class ActivityAboutUs : AppCompatActivity() {
         setContentView(R.layout.activity_about_us)
         txtabout = findViewById(R.id.txtabout)
         text= "<p>My Medical is an E-Commerce platform operate by <strong>GREEN FIELD</strong>. </p><p>Very dynamic platform for your day to day requirements of medicines.</p><p>We choose and pick best quality medicines direct from farm and make available for you at your door step. We help you to buy in the most comfortable environment.</p><p>We accept orders 24x7, and happy to deliver your valuable goods very next day.</p><p>We are also concern for your safety and hence, we strictly follow all safety measures starting from procurement to delivery destination. </p><p>You can choose our various payment option and enjoy your shopping."
-
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         txtabout.setText(text?.let { HtmlCompat.fromHtml(it, 0) })
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

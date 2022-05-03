@@ -17,7 +17,6 @@ import com.test.mymadical.model.CategoryTblItem
 class AdepterCategory(var listcategory: List<CategoryTblItem>, var context: Context) :
     RecyclerView.Adapter<AdepterCategory.ViewHolder>() {
     var mListener: ClickInterface? = null
-
     fun setOnItemClickListener(clickListener: ClickInterface) {
         mListener = clickListener
     }

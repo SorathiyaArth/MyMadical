@@ -175,14 +175,14 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_14sdp"
-                android:ellipsize="end"
                 android:layout_toStartOf="@+id/txtViewdetails"
                 android:layout_toLeftOf="@+id/txtViewdetails"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:text="sdfsfsfsfsffsfsfsfsf"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="@dimen/_13sdp" />
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtViewdetails"
@@ -193,13 +193,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
-                android:ellipsize="end"
-                android:paddingTop="@dimen/_4sdp"
-                android:paddingBottom="@dimen/_4sdp"
-                android:paddingLeft="@dimen/_7sdp"
-                android:paddingRight="@dimen/_7sdp"
-                android:maxLines="3"
                 android:background="@color/primary"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:paddingLeft="@dimen/_7sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingRight="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_4sdp"
                 android:text="View Order"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />

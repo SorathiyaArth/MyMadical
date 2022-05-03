@@ -1,5 +1,6 @@
 package com.test.mymadical
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,8 +12,10 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.mymadical.Adepter.AdepterMyOrder
+import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Interface.OrderDisplayInterface
 import com.test.mymadical.Utils.Utils
 import com.test.mymadical.model.ModelMyOrder
@@ -34,8 +37,13 @@ class Activity_order : AppCompatActivity() {
         setContentView(R.layout.activity_order)
         lyt_not_found = findViewById(R.id.lyt_not_found)
         RvMyOrder = findViewById(R.id.RvMyOrder)
-        RvMyOrder.layoutManager = GridLayoutManager(this, 1)
-
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
+        RvMyOrder.setLayoutManager(linearLayoutManager)
+       // RvMyOrder.layoutManager = GridLayoutManager(this, 1)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         val preferences: SharedPreferences = this.getSharedPreferences(main_key, MODE_PRIVATE)
 
         sherdiscustID = preferences.getString(custID_key, "afd")
@@ -46,9 +54,7 @@ class Activity_order : AppCompatActivity() {
         }
 
 
-
     }
-
 
 
     private fun getoederlist() {
@@ -70,13 +76,29 @@ class Activity_order : AppCompatActivity() {
         val call = creation.getorderdata(sherdiscustID!!.toInt())
         call.enqueue(object : Callback<ModelMyOrder> {
             override fun onResponse(call: Call<ModelMyOrder>, response: Response<ModelMyOrder>) {
-                if (response.body()!!.flag!!.equals(1)) {
-
+                if (response.isSuccessful) {
                     AlertDialog.dismiss()
-                    val listorder = response.body()!!.orderTbl
+                    if (response.body()!!.flag!!.equals(1)) {
+                        val listorder = response.body()!!.orderTbl
 
-                    adepterOrder = AdepterMyOrder(listorder as List<OrderTblItem>, baseContext)
-                    RvMyOrder.adapter = adepterOrder
+                        adepterOrder = AdepterMyOrder(listorder as List<OrderTblItem>, baseContext)
+                        RvMyOrder.adapter = adepterOrder
+
+                        adepterOrder!!.setOnclickInterface(object : ClickInterface {
+                            override fun onclicked12(position: Int, Types: Int) {
+                                if (Types == 1) {
+                                    val intent =
+                                        Intent(this@Activity_order, Activity_order_details::class.java)
+                                    intent.putExtra("orderid",listorder.get(position).orderId)
+                                    startActivity(intent)
+                                }
+                            }
+                        })
+
+                    }else{
+                        lyt_not_found.visibility = View.VISIBLE
+                    }
+
 
 
                 }
@@ -87,5 +109,10 @@ class Activity_order : AppCompatActivity() {
             }
         })
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

@@ -10,8 +10,13 @@
     <color name="primary">#6080ff</color>
     <color name="dark">#0f54cb</color>
     <color name="light">#99afff</color>
-    <color name="textColor">#333333</color>
+    <color name="myacc">#7e7e7f</color>
+    <color name="strok">#e4e5ea</color>
+    <color name="buttoncolor">#646565</color>
+    <color name="divider">#bdbdbd</color>
 
+    <color name="textColor">#333333</color>
+    <color name="accountcolor">#a6a6a6</color>
     <color name="transparent">#00000000</color>
     <color name="secondary_text">#757575</color>
 </resources>

@@ -21,10 +21,13 @@ import androidx.core.view.MenuItemCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.androidadvance.topsnackbar.TSnackbar
 import com.test.mymadical.Adepter.AdepterProduct
+import com.test.mymadical.Interface.AddToCartInterface
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Interface.SearchProductInterface
 import com.test.mymadical.Utils.Utils
+import com.test.mymadical.model.ModelCartaddInfo
 import com.test.mymadical.model.ProductInfo
 import com.test.mymadical.model.ProductTblItem
 import retrofit2.Call
@@ -91,40 +94,6 @@ class SearchActivity : AppCompatActivity() {
 
 
 
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            1 -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    /* if (data != null && data.extras != null) {
-
-                         bitmap = data!!.extras!!["data"] as Bitmap
-                         if (bitmap != null) {
-                             imgUser.setImageBitmap(bitmap)
-                             Log.wtf("DDD", "dddd")
-                         }
-                     }*/
-                } else if (resultCode == Activity.RESULT_CANCELED) {
-                    Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show()
-
-                }
-            }
-            2 -> {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    // Glide.with(this).load(data.data).into(imgUser)
-
-
-                    /* val file = File(getRealPathFromURI(data.data!!))
-                     path = file.getPath()
-                     Log.e("path", file.getPath() + "  111")
-
-
-                     CheckImageSize(file.toString())
- */
-                }
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -238,7 +207,7 @@ class SearchActivity : AppCompatActivity() {
                                 }
                                 if (Types == 99) {
                                     if (Utils().islogin(this@SearchActivity)) {
-                                        //CallApi("plus", listproduct[position].productId)
+                                        CallApi1("plus", listproduct[position].productId)
                                     } else {
                                         val intent = Intent(
                                             this@SearchActivity,
@@ -248,11 +217,11 @@ class SearchActivity : AppCompatActivity() {
                                     }
                                 }
                                 if (Types == 0) {
-                                    // CallApi("minus", listproduct[position].productId)
+                                    CallApi1("minus", listproduct[position].productId)
 
                                 }
                                 if (Types == 1) {
-                                    // CallApi("plus", listproduct[position].productId)
+                                    CallApi1("plus", listproduct[position].productId)
                                 }
                             }
                         })
@@ -269,8 +238,82 @@ class SearchActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun CallApi1(s: String, productId: String?) {
+        if (Utils().isNetworkAvailable(this@SearchActivity)) {
+            val progress = LayoutInflater.from(this)
+                .inflate(R.layout.custom_progress_dialog, null)
+
+
+            val builder = AlertDialog.Builder(this)
+                .setView(progress)
+            val AlertDialog = builder.create()
+            AlertDialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            AlertDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+
+            AlertDialog.show()
+
+            val creation: AddToCartInterface =
+                Retroclient.getSingleTonClient()!!.create(
+                    AddToCartInterface::class.java)
+            val call = creation.insertdata(sherdiscustID,productId,s)
+            call?.enqueue(object :Callback<ModelCartaddInfo>{
+                override fun onResponse(
+                    call: Call<ModelCartaddInfo>,
+                    response: Response<ModelCartaddInfo>
+                ) {
+                    AlertDialog.dismiss()
+                    tvmytotalitems.text = response.body()?.count.toString()
+                    Utils()
+                        .Logindata(this@SearchActivity, "cartitemtotal", response.body()?.count.toString())
+                    Toast.makeText(this@SearchActivity, response.body()?.message, Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(
+                    call: Call<ModelCartaddInfo>,
+                    t: Throwable
+                ) {
+                    Log.e("onfailadd",t.message + "   l ")
+                    Toast.makeText(
+                        this@SearchActivity,
+                        t.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+
+
+        } else {
+            Utils().showToastShortForNoInternet(this@SearchActivity)
+            val snackbar: TSnackbar = TSnackbar
+                .make(
+                    RV_product,
+                    "Please Check your Internet Connection",
+                    TSnackbar.LENGTH_INDEFINITE
+                )
+                .setAction("OK", object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        finish();
+                        startActivity(getIntent())
+                    }
+
+                })
+            snackbar.setActionTextColor(Color.BLACK)
+            val snackbarView: View = snackbar.view
+            snackbarView.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+            val textView =
+                snackbarView.findViewById(R.id.snackbar_text) as TextView
+            textView.setTextColor(Color.BLACK)
+            snackbar.show()
+        }
+
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 }
+
+

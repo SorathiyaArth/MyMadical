@@ -338,7 +338,8 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imgRefer"
@@ -442,7 +443,8 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imgHowWorks"
@@ -588,7 +590,8 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imgPolicy"

@@ -150,4 +150,19 @@ interface OrderDisplayInterface {
         @Field("user_id") user_id: Int
     ): Call<ModelMyOrder>
 }
+interface OrderDetailsInterface {
+    @FormUrlEncoded
+    @POST("order_details_mymedical.php")
+    fun getorderdetails(
+        @Field("order_id") order_id: String?
+    ): Call<ModelOrederDetails>
+}
+interface SignupUserInterface {
+    @FormUrlEncoded
+    @POST("mymedical_signup.php")
+    fun postuserdetailsdetails(
+        @Field("user_name") user_name: String?,
+        @Field("user_mobileno") user_mobileno: String?
+    ): Call<ModelLoginInfo>
+}
 

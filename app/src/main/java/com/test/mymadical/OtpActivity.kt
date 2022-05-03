@@ -145,6 +145,7 @@ class OtpActivity : AppCompatActivity() {
                     if (image !="") {
                         com.test.mymadical.Utils.Utils()
                             .Logindata(this@OtpActivity, "uimage", image.toString())
+                        Log.e("dsddddsd",image.toString())
                     }
                     com.test.mymadical.Utils.Utils()
                         .Logindata(this@OtpActivity, "unumber", number.toString())
