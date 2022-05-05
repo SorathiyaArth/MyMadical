@@ -111,8 +111,8 @@ class ActivityOrderReview : AppCompatActivity() {
                 }, year, month, day
             )
             val now = System.currentTimeMillis() - 1000
-            dpd.getDatePicker().setMinDate(now)
-            dpd.getDatePicker().setMaxDate(now + 1000 * 60 * 60 * 24 * 3)
+            dpd.getDatePicker().setMinDate(now+1000 * 60 * 60 *5)
+            dpd.getDatePicker().setMaxDate(now + 1000 * 60 * 60 * 24 * 4)
 
             dpd.show()
         }

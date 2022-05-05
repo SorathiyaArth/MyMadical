@@ -1,23 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="3dp"
+
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="7dp"
 
         >
+
         <RelativeLayout
+            android:id="@+id/relativelayoutDoctorlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relativelayoutDoctorlist">
+            android:layout_marginStart="3dp"
+
+            android:layout_marginTop="5dp">
+
             <TextView
+                android:id="@+id/txtDoctorName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtDoctorName"/>
+                android:layout_marginStart="3dp"
+                android:text="Dr.Arth Sorathiya"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtDoctorFees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/doc_price_background"
+                android:paddingStart="5dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="2dp"
+                android:text="From: $25"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <ImageView
+                android:id="@+id/imgDoc_pic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@id/txtDoctorName"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <RelativeLayout
+                android:id="@+id/relativelayoutdetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtDoctorName"
+                android:layout_toEndOf="@id/imgDoc_pic">
+
+                <RatingBar
+                    android:id="@+id/ratingbardocrtor"
+                    style="@style/ImageRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="9dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="3.5" />
+
+                <TextView
+                    android:id="@+id/txttotalreview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toEndOf="@id/ratingbardocrtor"
+                    android:text="(17)"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtDoctorCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ratingbardocrtor"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Ahemdabad" />
+
+                <TextView
+                    android:id="@+id/txtDoctorExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtDoctorCity"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="4dp"
+                    android:text="1 Year Experience" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtDeviderLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/imgDoc_pic"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/line1"
+                android:layout_marginBottom="5dp"
+
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtDeviderLine"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click to book: "
+                    android:id="@+id/txtClicktobook"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cardviewToday"
+                    android:layout_toEndOf="@id/txtClicktobook"
+                    android:layout_marginStart="10dp"
+                    app:cardCornerRadius="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/primary"
+                    >
+                    <TextView
+                        android:id="@+id/txtToday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:textSize="18sp"
+                        android:text="Today"/>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardviewNextday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toEndOf="@id/cardviewToday"
+                    android:backgroundTint="@color/primary"
+                    app:cardCornerRadius="3dp">
+
+                    <TextView
+                        android:id="@+id/txtNextday"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="05/05"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
 
 
         </RelativeLayout>

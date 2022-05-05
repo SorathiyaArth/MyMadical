@@ -88,7 +88,8 @@
             android:name=".Dashboard"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Spleshscreen">
+        <activity android:name=".Spleshscreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

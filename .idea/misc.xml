@@ -3,12 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable-hdpi/doc_filter_background.xml" value="0.167" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable-v24/rectangle2.xml" value="0.167" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/doc_price_background.xml" value="0.167" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.164" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/ic_baseline_done_24.xml" value="0.164" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/ratingbar_selector.xml" value="0.167" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/rectangle1.xml" value="0.167" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/rectengal.xml" value="0.1775" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/round.xml" value="0.167" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/rounded_corner.xml" value="0.167" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/search.xml" value="0.167" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/drawable/shape_overlay_round_dark.xml" value="0.164" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_categorylist.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_dashboard.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_listdoctor.xml" value="0.2669138090824838" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_my_accounts.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_order.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/activity_order_details.xml" value="0.23854166666666668" />
@@ -22,8 +31,10 @@
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/raw_catlist.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/raw_product.xml" value="0.264" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/raw_subcategory.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/row_doc_list.xml" value="0.264" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/row_myorder.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/layout/row_orderdetails.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/DeLL/AndroidStudioProjects/MyMadical/app/src/main/res/menu/filter_menu.xml" value="0.24270833333333333" />
       </map>
     </option>
   </component>

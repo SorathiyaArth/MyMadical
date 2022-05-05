@@ -165,4 +165,21 @@ interface SignupUserInterface {
         @Field("user_mobileno") user_mobileno: String?
     ): Call<ModelLoginInfo>
 }
+interface UserprofileeditInterface {
+    @FormUrlEncoded
+    @POST("user_update_mymedical.php")
+    fun Uapateuserdetailsdetails(
+        @Field("user_name") user_name: String?,
+        @Field("user_email") user_email: String?,
+        @Field("user_id") user_id: String?,
+        @Field("user_mobileno") user_mobileno: String?
+    ): Call<ModelLoginInfo>
+
+}
+interface DoctorDetailsInterface {
+    @GET("display_doctor_details.php")
+
+    fun getdoctordata(): Call<ModelDoctorDetails>
+}
+
 

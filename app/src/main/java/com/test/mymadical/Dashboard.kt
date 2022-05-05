@@ -240,7 +240,7 @@ class Dashboard : AppCompatActivity() {
         }
 
         Cv_FindDoctor.setOnClickListener {
-            val intent = Intent(this, FindDoctorActivity::class.java)
+            val intent = Intent(this, ListDoctor::class.java)
             startActivity(intent)
         }
         relativeAbout.setOnClickListener {

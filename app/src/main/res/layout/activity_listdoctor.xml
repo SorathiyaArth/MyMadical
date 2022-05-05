@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListDoctor">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -29,24 +30,129 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
     </androidx.appcompat.widget.Toolbar>
+
     <RelativeLayout
+        android:id="@+id/relativelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:id="@+id/relativelayout">
-        <androidx.recyclerview.widget.RecyclerView
+        android:background="#F1F3F2">
+
+
+        <RelativeLayout
+            android:id="@+id/relativelayoutFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/recycleview_doctor"/>
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/rectangle2">
+
+            <TextView
+                android:id="@+id/txtsorting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Filter By : "
+                android:textColor="@color/black"
+                android:textSize="18sp"
+
+                />
+
+            <TextView
+                android:id="@+id/txtFilterBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/txtsorting"
+                android:textColor="@color/black"
+
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtsorting"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtFilterByCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/doc_price_background"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+                    android:paddingStart="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="By Cost"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtFilterByRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+
+                    android:layout_toEndOf="@id/txtFilterByCost"
+                    android:layout_weight="1"
+                    android:background="@drawable/doc_price_background"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+                    android:paddingStart="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="By Rating"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtFilterByExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_toEndOf="@id/txtFilterByRating"
+                    android:layout_weight="1"
+                    android:background="@drawable/doc_price_background"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
+                    android:paddingStart="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="2dp"
+                    android:text="By Experience"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleview_doctor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativelayoutFilter" />
+
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/Rl_nodata"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/Rl_nodata"
-        android:visibility="visible"
-        android:layout_below="@id/toolbar">
+        android:layout_below="@id/toolbar"
+        android:visibility="gone">
 
 
         <ImageView
@@ -70,18 +176,18 @@
             android:src="@mipmap/ic_launcher" />
 
         <TextView
+            android:id="@+id/Txt_nodata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:id="@+id/Txt_nodata"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="64dp"
             android:layout_marginTop="284dp"
             android:layout_marginEnd="66dp"
             android:gravity="center"
-            android:textColor="@color/black"
             android:text="No such doctor in this city"
+            android:textColor="@color/black"
             android:textSize="@dimen/_18sdp" />
 
     </RelativeLayout>

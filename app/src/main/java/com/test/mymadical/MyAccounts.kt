@@ -21,6 +21,9 @@ class MyAccounts : AppCompatActivity() {
     val uemail_key = "uemail"
     val uimage_key = "uimage"
     val ucart_key = "cartitemtotal"
+    var shareduname = ""
+    var sherdnumber = ""
+    var custId = ""
 
 
     lateinit var imgMyUpdateimage: CircleImageView
@@ -46,9 +49,10 @@ class MyAccounts : AppCompatActivity() {
         ids()
         val preferences: SharedPreferences = this.getSharedPreferences(main_key, MODE_PRIVATE)
 
-        val shareduname = preferences.getString(uname_key, "Guest User")
-        val sherdnumber = preferences.getString(unumber_key, "**********")
-        val image = preferences.getString(uimage_key, "")
+         shareduname = preferences.getString(uname_key, "Guest User").toString()
+         shareduname = preferences.getString(uname_key, "Guest User").toString()
+         sherdnumber = preferences.getString(unumber_key, "**********").toString()
+        custId = preferences.getString(custID_key, "").toString()
 
         tvMyuname.text = shareduname
         tvMyuphone.text = sherdnumber
@@ -82,6 +86,7 @@ class MyAccounts : AppCompatActivity() {
         }
         lenearSubAccountInfo.setOnClickListener {
             val intent = Intent(this, ActivityUserProfileEdit::class.java)
+
             startActivity(intent)
         }
 
@@ -108,5 +113,9 @@ class MyAccounts : AppCompatActivity() {
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
 
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
