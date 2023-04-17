@@ -21,6 +21,8 @@ class ActivityOffers : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offers)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         details()
 
         imgOffer = findViewById(R.id.imgOffer)
@@ -53,4 +55,10 @@ class ActivityOffers : AppCompatActivity() {
                     "    YOU HAVE TO ADD THAT ITEM IN YOUR ORDER AND WHATSAPP ME ON 7600898872 THE NAME OF ITEM.\n" +
                     "    ONLY ONE LATEST ADDED ITEM WILL CONSIDER FROM ALL CATEGORIES."
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.test.mymadical.R
@@ -52,7 +53,19 @@ class AdepterDoctorDetails(val listdoctor: List<DoctorDetailsTblItem>, var conte
         val tomorrowAsString: String = dateFormat.format(tomorrow)
         holder.txtNextday.text = tomorrowAsString
         Glide.with(context).load(doctor.docImg).into(holder.imgDoc_pic)
+        holder.txtToday.setOnClickListener {
+            val calendar = Calendar.getInstance()
 
+            var tHour = calendar[Calendar.HOUR_OF_DAY]
+
+            if (tHour >= 19 ) {
+                Toast.makeText(context, "Clinic is closed", Toast.LENGTH_SHORT).show()
+
+            } else {
+                Toast.makeText(context, "Clinic is Open", Toast.LENGTH_SHORT).show()
+
+            }
+        }
 
     }
 

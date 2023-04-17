@@ -86,16 +86,12 @@ class FindDoctorActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
             override fun onclicked12(position: Int, Types: Int) {
                 if (Types == 1) {
 
-                    if (cityname != null) {
                         val intent = Intent(this@FindDoctorActivity, ListDoctor::class.java)
                         intent.putExtra("city_name",cityname)
                         intent.putExtra("doc_type",listdoctor[position])
                         intent.putExtra("doc_img",listimage[position])
                         startActivity(intent)
-                    } else {
-                        Utils().showToastShortselectcity(this@FindDoctorActivity)
 
-                    }
                 }
             }
         })

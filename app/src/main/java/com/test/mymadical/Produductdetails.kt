@@ -1,5 +1,6 @@
 package com.test.mymadical
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -27,7 +28,7 @@ import retrofit2.Response
 
 class Produductdetails : AppCompatActivity() {
     var toolbar: Toolbar? = null
-    lateinit var tvtitle: TextView
+    private lateinit var tvtitle: TextView
     lateinit var tvcart: RelativeLayout
     lateinit var linearlayoutOutOfStock: LinearLayout
     lateinit var linearlayoutAddToCart: LinearLayout
@@ -67,7 +68,6 @@ class Produductdetails : AppCompatActivity() {
         cartitemcount = preferences.getString(ucart_key, "")
         tvmytotalitems.text =cartitemcount
         pro_id = intent.getStringExtra("pro_id").toString()
-        Log.e("khgf", pro_id + "       jkhgfhgxd");
 
         buynow.setOnClickListener {
             callApi()
@@ -109,7 +109,7 @@ class Produductdetails : AppCompatActivity() {
                 )
                 .setAction("OK", object : View.OnClickListener {
                     override fun onClick(v: View?) {
-                        finish();
+                        finish()
                         startActivity(getIntent())
                     }
 
@@ -143,7 +143,7 @@ class Produductdetails : AppCompatActivity() {
                 Retroclient.getSingleTonClient()!!.create(
                     AddToCartInterface::class.java)
             val call = creation.insertdata(sherdiscustID,pro_id,"plus")
-            call?.enqueue(object :Callback<ModelCartaddInfo>{
+            call.enqueue(object :Callback<ModelCartaddInfo>{
                 override fun onResponse(
                     call: Call<ModelCartaddInfo>,
                     response: Response<ModelCartaddInfo>
@@ -179,7 +179,7 @@ class Produductdetails : AppCompatActivity() {
                 )
                 .setAction("OK", object : View.OnClickListener {
                     override fun onClick(v: View?) {
-                        finish();
+                        finish()
                         startActivity(getIntent())
                     }
 
@@ -215,6 +215,7 @@ class Produductdetails : AppCompatActivity() {
             Retroclient.getSingleTonClient()!!.create(ProductdetailsInterface::class.java)
         val call = creation.getprodetaildata(pro_id!!.toInt())
         call.enqueue(object : Callback<ProductInfo> {
+            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<ProductInfo>, response: Response<ProductInfo>) {
                 if (response.isSuccessful) {
                     AlertDialog.dismiss()
@@ -226,6 +227,8 @@ class Produductdetails : AppCompatActivity() {
                         tvproductmrp.text = "₹" + listproduct.get(0)!!.productMrp
                         tvproductdiscount.text = listproduct.get(0)!!.productOff
                         tvdiscription.text = listproduct.get(0)!!.productDis
+
+
                         Glide.with(this@Produductdetails).load(listproduct[0]?.productImage)
                             .into(ivlargeimage)
                         Glide.with(this@Produductdetails).load(listproduct[0]?.productImage)
@@ -233,6 +236,9 @@ class Produductdetails : AppCompatActivity() {
                         if (listproduct[0]?.productInstock == "No") {
                             linearlayoutOutOfStock.isVisible = true
                             linearlayoutAddToCart.isVisible = false
+                            Txt_inoutstock.setText("Out of Stock")
+                            Txt_inoutstock.setTextColor(Color.parseColor("#FF0000"))
+
 
                         }
 

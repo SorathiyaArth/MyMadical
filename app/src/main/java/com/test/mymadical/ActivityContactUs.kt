@@ -18,6 +18,8 @@ class ActivityContactUs : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_us)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         ids()
         txtContact1.setText( "+91  9574290218")
         txtContact2.setText("+91 8511018192")
@@ -47,4 +49,9 @@ class ActivityContactUs : AppCompatActivity() {
         txtContact3 =findViewById(R.id.txtContact3)
         txtWhats =findViewById(R.id.txtWhats)
     }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
 }

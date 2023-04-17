@@ -1,24 +1,23 @@
 package com.test.mymadical
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.test.mymadical.Interface.GetUserInfoInterface
 import com.test.mymadical.Interface.GetUserLoginInterface
 import com.test.mymadical.model.ModelLoginInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.zip.CRC32
 
 class LoginActivity : AppCompatActivity() {
     lateinit var tvsingup: TextView
@@ -46,7 +45,12 @@ class LoginActivity : AppCompatActivity() {
 
 
             if (chackstudenmobileno()) {
-
+                val inputManager: InputMethodManager =
+                    this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.hideSoftInputFromWindow(
+                    this.currentFocus!!.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
                 ApiCall()
 
 

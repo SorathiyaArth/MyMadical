@@ -1,10 +1,12 @@
 package com.test.mymadical
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.ImageView
@@ -29,10 +31,15 @@ class ListDoctor : AppCompatActivity() {
     var toolbar: Toolbar? = null
     var city_name: String = ""
     var doc_type: String = ""
+    val main_key = "my_pref"
+    val custID_key = "custID_key"
+    val ucart_key = "cartitemtotal"
+
     var doc_img: Int = 0
     lateinit var listdoctor: List<DoctorDetailsTblItem>
     lateinit var filteredlistdoctor: List<DoctorDetailsTblItem>
     lateinit var tvtitle: TextView
+    lateinit var tvmytotalitems: TextView
     lateinit var txtFilterBy: TextView
     lateinit var txtFilterByCost: TextView
     lateinit var txtFilterByRating: TextView
@@ -49,6 +56,9 @@ class ListDoctor : AppCompatActivity() {
         setContentView(R.layout.activity_listdoctor)
         ids()
 
+        val preferences: SharedPreferences = this.getSharedPreferences(main_key, MODE_PRIVATE)
+        val cartitemcount = preferences.getString(ucart_key, "0")
+        tvmytotalitems.text = cartitemcount
 
 
         setSupportActionBar(toolbar)
@@ -139,6 +149,7 @@ class ListDoctor : AppCompatActivity() {
 
     private fun ids() {
         tvtitle = findViewById(R.id.tvtitle)
+        tvmytotalitems = findViewById(R.id.tvmytotalitems)
         txtFilterBy = findViewById(R.id.txtFilterBy)
         txtFilterByCost = findViewById(R.id.txtFilterByCost)
         txtFilterByRating = findViewById(R.id.txtFilterByRating)
@@ -174,7 +185,10 @@ class ListDoctor : AppCompatActivity() {
                 if (response.isSuccessful) {
                     AlertDialog.dismiss()
                     listdoctor = response.body()?.doctorDetailsTbl as List<DoctorDetailsTblItem>
+                    Collections.shuffle(listdoctor);
                     filteredlistdoctor = listdoctor
+
+
 
                     mAdepter =
                         AdepterDoctorDetails(
@@ -188,7 +202,7 @@ class ListDoctor : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ModelDoctorDetails>, t: Throwable) {
-                Log.e("jbhhfg", t.message.toString())
+                e("jbhhfg", t.message.toString())
 
 
             }

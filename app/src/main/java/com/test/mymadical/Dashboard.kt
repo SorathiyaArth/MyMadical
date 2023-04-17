@@ -240,7 +240,7 @@ class Dashboard : AppCompatActivity() {
         }
 
         Cv_FindDoctor.setOnClickListener {
-            val intent = Intent(this, ListDoctor::class.java)
+            val intent = Intent(this, FindDoctorActivity::class.java)
             startActivity(intent)
         }
         relativeAbout.setOnClickListener {
@@ -460,7 +460,7 @@ class Dashboard : AppCompatActivity() {
             this, drawerLayout, toolbar, R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        toggle.isDrawerIndicatorEnabled = false
+        //toggle.isDrawerIndicatorEnabled = false
         toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
