@@ -3,17 +3,18 @@ package com.test.mymadical.Interface
 import com.test.mymadical.model.*
 import retrofit2.Call
 import retrofit2.http.*
-
+//asd
 interface CategoryInterface {
-    @GET("display_category.php")
+
+        @GET("display_category.php")
 
     fun getdata(): Call<CategoryInfo>
 }
 
-
+//asd
 interface SubcategoryInterface {
     @FormUrlEncoded
-    @POST("display-subcategory.php")
+    @POST("display_subcategory.php")
     fun getsubdata(
         @Field("cat_id") cat_id: Int
     ): Call<SubcategoryInfo>
@@ -143,6 +144,8 @@ interface orderplacedInfoInterface {
     ): Call<ModelOrderPlaced>
 
 }
+
+//asd
 interface OrderDisplayInterface {
     @FormUrlEncoded
     @POST("order_display_mymedical.php")

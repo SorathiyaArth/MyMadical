@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 object Retroclient {
 
-    private val APP_CONFIG_LINK = "https://androidarth.000webhostapp.com/"
+    private val APP_CONFIG_LINK = "https://arthsorathiya.000webhostapp.com/"
     private var singleTonRetrogit: Retrofit? = null
     private var singleTonClient: OkHttpClient.Builder? = null
 
@@ -26,12 +26,14 @@ object Retroclient {
             singleTonClient!!.addInterceptor(loggingInterceptor)
         }
         if (singleTonRetrogit == null) {
-
+            val gson = GsonBuilder()
+                .setLenient()
+                .create()
 
             singleTonRetrogit = Retrofit.Builder()
                 .baseUrl(APP_CONFIG_LINK)
                 .client(singleTonClient!!.build())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
         }
         return singleTonRetrogit

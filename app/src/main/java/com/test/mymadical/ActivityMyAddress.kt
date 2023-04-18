@@ -120,8 +120,7 @@ var total :String = ""
 
                 val listaddress = response.body()?.addressTbl
                 AlertDialog.dismiss()
-
-                if (listaddress != null) {
+                 if (listaddress != null) {
                     if (response.isSuccessful) {
                     }
 
@@ -142,6 +141,7 @@ var total :String = ""
                             }
                             if (Types == 2) {
                                 val fromAccount = intent.getStringExtra("fromAccount")
+                                Log.e("asd","fromAccount  "+fromAccount)
                                 if (fromAccount==null) {
                                     val address = listaddress[position]
 
@@ -162,6 +162,7 @@ var total :String = ""
                                     intent.putExtra("content", listaddress.get(position)?.number)
                                     intent.putExtra("address", tvaddress)
                                     intent.putExtra("total", total)
+
 
                                     startActivity(intent)
                                 }
@@ -230,6 +231,9 @@ var total :String = ""
                         intent.putExtra("pincode", listaddress?.get(position)?.pincode)
                         intent.putExtra("city", listaddress?.get(position)?.city)
                         intent.putExtra("state", listaddress?.get(position)?.state)
+                        intent.putExtra("fromAccount","fromAccount")
+                        intent.putExtra("type","update")
+
                         startActivity(intent)
 
                     }

@@ -40,19 +40,10 @@ class ActivityAddEditAddress : AppCompatActivity() {
         setContentView(R.layout.activity_add_edit_address)
         Ids()
         addressid = intent.getStringExtra("addid").toString()
-        Log.e("nvhgcfdxs", addressid)
-        if (addressid == "null") {
-            etname.text = ""
-            etnumber.text = ""
-            etaddress.text = ""
-            etArea.text = ""
-            etPincode.text = ""
-            etcity.text = ""
-            etstate.text = ""
-            types = "add"
-            txtAddAddress.text = "Add Address"
+        val type = intent.getStringExtra("type").toString()
+        Log.e("nvhgcfdxs", type)
+        if (type.equals("update")) {
 
-        } else {
             etname.text = intent.getStringExtra("name").toString()
             etnumber.text = intent.getStringExtra("content").toString()
             etaddress.text = intent.getStringExtra("address").toString()
@@ -63,6 +54,16 @@ class ActivityAddEditAddress : AppCompatActivity() {
             txtAddAddress.text = "Update Address"
             types = "update"
 
+        } else {
+            etname.text = ""
+            etnumber.text = ""
+            etaddress.text = ""
+            etArea.text = ""
+            etPincode.text = ""
+            etcity.text = ""
+            etstate.text = ""
+            types = "add"
+            txtAddAddress.text = "Add Address"
 
         }
 
@@ -133,8 +134,14 @@ class ActivityAddEditAddress : AppCompatActivity() {
 
                     AlertDialog.dismiss()
                     if (response.body()?.flag == "1") {
+                        val fromAccount = intent.getStringExtra("fromAccount")
+
                         val intent =
                             Intent(this@ActivityAddEditAddress, ActivityMyAddress::class.java)
+                        if (fromAccount != null) {
+                            intent.putExtra("fromAccount", fromAccount)
+
+                        }
                         intent.putExtra("CustId", custid)
                         startActivity(intent)
                         finish()

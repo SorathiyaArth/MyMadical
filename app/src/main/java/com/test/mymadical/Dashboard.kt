@@ -21,9 +21,9 @@ import androidx.core.widget.NestedScrollView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.androidadvance.topsnackbar.TSnackbar
+ import com.androidadvance.topsnackbar.TSnackbar
 import com.bumptech.glide.Glide
-import com.smarteist.autoimageslider.SliderView
+ import com.smarteist.autoimageslider.SliderView
 import com.test.mymadical.Adepter.AdepterCategory
 import com.test.mymadical.Adepter.BannerAdepter
 import com.test.mymadical.Interface.CategoryInterface
@@ -447,7 +447,7 @@ class Dashboard : AppCompatActivity() {
                         }
                     }) } }
             override fun onFailure(call: Call<CategoryInfo>, t: Throwable) {
-                Log.d("DSFSF", t.message + " hii") }
+                Log.e("DSFSF", t.message + " hii") }
         }) }
 
     override fun onSupportNavigateUp(): Boolean {
