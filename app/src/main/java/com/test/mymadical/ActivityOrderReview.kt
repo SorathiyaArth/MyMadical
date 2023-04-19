@@ -205,7 +205,7 @@ class ActivityOrderReview : AppCompatActivity() {
 
                 if (response.body()!!.flag.equals("1")) {
                     val intent = Intent(this@ActivityOrderReview, Activity_order::class.java)
-
+intent.putExtra("from","order");
                     startActivity(intent)
                     finish()
                     com.test.mymadical.Utils.Utils()
@@ -327,5 +327,9 @@ class ActivityOrderReview : AppCompatActivity() {
         couponLayout = findViewById(R.id.couponLayout)
         relDate = findViewById(R.id.relDate)
 
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

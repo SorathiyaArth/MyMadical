@@ -264,4 +264,8 @@ class ActivityAddEditAddress : AppCompatActivity() {
         }
         return isstudentnamevalid
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

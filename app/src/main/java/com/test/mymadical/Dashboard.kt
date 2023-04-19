@@ -190,7 +190,8 @@ class Dashboard : AppCompatActivity() {
             builder.setPositiveButton("YES") { dialog, which ->
 
                 preferences.edit().clear().apply()
-                finish()
+                finishAffinity()
+                startActivity(intent)
                 dialog.dismiss()
             }
 
@@ -485,6 +486,11 @@ class Dashboard : AppCompatActivity() {
             Glide.with(this).load(R.drawable.img_default_user_icon).into(imgUserProfile)
         }
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 }

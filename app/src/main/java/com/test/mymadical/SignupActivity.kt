@@ -172,5 +172,8 @@ class SignupActivity : AppCompatActivity() {
         return isstudentmobileno
     }
 
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

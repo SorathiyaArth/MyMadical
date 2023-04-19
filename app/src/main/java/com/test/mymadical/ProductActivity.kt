@@ -1,4 +1,4 @@
-        package com.test.mymadical
+package com.test.mymadical
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -69,24 +69,18 @@ class ProductActivity : AppCompatActivity() {
         tvtitle.setText(subcat_name)
 
 
-
-
-
-
-
-
         val preferences: SharedPreferences = this.getSharedPreferences(main_key, MODE_PRIVATE)
-         sherdiscustID = preferences.getString(custID_key, "")
+        sherdiscustID = preferences.getString(custID_key, "")
         cartitemcount = preferences.getString(ucart_key, "")
-        tvmytotalitems.text =cartitemcount
+        tvmytotalitems.text = cartitemcount
         RV_product = findViewById(R.id.RV_product)
         RV_product.layoutManager = GridLayoutManager(this, 2)
 
         tvcart.setOnClickListener {
-            if(Utils().islogin(this)){
+            if (Utils().islogin(this)) {
                 val intent = Intent(this, ActivityMyCart::class.java)
                 startActivity(intent)
-            } else{
+            } else {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
@@ -149,41 +143,43 @@ class ProductActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     AlertDialog.dismiss()
                     val listproduct = response.body()?.productTbl
-                    if (listproduct!=null){
-                    adepterproduct =
-                        AdepterProduct(listproduct as ArrayList<ProductTblItem>, baseContext)
+                    if (listproduct != null) {
+                        adepterproduct =
+                            AdepterProduct(listproduct as ArrayList<ProductTblItem>, baseContext)
 
-                    RV_product.adapter = adepterproduct
+                        RV_product.adapter = adepterproduct
 
-                        adepterproduct?.setOnClickListner(object :ClickInterface{
+                        adepterproduct?.setOnClickListner(object : ClickInterface {
                             override fun onclicked12(position: Int, Types: Int) {
-                                if (Types==3){
-                                    val intent = Intent(this@ProductActivity , Produductdetails::class.java)
-                                   intent.putExtra("pro_id",listproduct[position].productId)
-                                   intent.putExtra("pro_name",listproduct[position].productName)
+                                if (Types == 3) {
+                                    val intent =
+                                        Intent(this@ProductActivity, Produductdetails::class.java)
+                                    intent.putExtra("pro_id", listproduct[position].productId)
+                                    intent.putExtra("pro_name", listproduct[position].productName)
                                     startActivity(intent)
                                 }
-                                if(Types==99){
+                                if (Types == 99) {
                                     if (Utils().islogin(this@ProductActivity)) {
                                         CallApi("plus", listproduct[position].productId)
-                                    }else{
-                                        val intent = Intent(this@ProductActivity, LoginActivity::class.java)
+                                    } else {
+                                        val intent =
+                                            Intent(this@ProductActivity, LoginActivity::class.java)
                                         startActivity(intent)
                                     }
                                 }
-                                if(Types==0){
+                                if (Types == 0) {
                                     CallApi("minus", listproduct[position].productId)
 
                                 }
-                                if(Types==1){
+                                if (Types == 1) {
                                     CallApi("plus", listproduct[position].productId)
                                 }
                             }
                         })
 
-                }else{
+                    } else {
                         Ll_nodata.visibility = View.VISIBLE
-                }
+                    }
                 }
             }
 
@@ -210,25 +206,33 @@ class ProductActivity : AppCompatActivity() {
 
             val creation: AddToCartInterface =
                 Retroclient.getSingleTonClient()!!.create(
-                    AddToCartInterface::class.java)
-            val call = creation.insertdata(sherdiscustID,productId,typ)
-            call?.enqueue(object :Callback<ModelCartaddInfo>{
+                    AddToCartInterface::class.java
+                )
+            val call = creation.insertdata(sherdiscustID, productId, typ)
+            call?.enqueue(object : Callback<ModelCartaddInfo> {
                 override fun onResponse(
                     call: Call<ModelCartaddInfo>,
                     response: Response<ModelCartaddInfo>
                 ) {
                     AlertDialog.dismiss()
                     tvmytotalitems.text = response.body()?.count.toString()
-                    Utils()
-                        .Logindata(this@ProductActivity, "cartitemtotal", response.body()?.count.toString())
-                    Toast.makeText(this@ProductActivity, response.body()?.message, Toast.LENGTH_SHORT).show()
+                    Utils().Logindata(
+                        this@ProductActivity,
+                        "cartitemtotal",
+                        response.body()?.count.toString()
+                    )
+                    Toast.makeText(
+                        this@ProductActivity,
+                        response.body()?.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onFailure(
                     call: Call<ModelCartaddInfo>,
                     t: Throwable
                 ) {
-                    Log.e("onfailadd",t.message + "   l ")
+                    Log.e("onfailadd", t.message + "   l ")
                     Toast.makeText(
                         this@ProductActivity,
                         t.message,
@@ -268,6 +272,7 @@ class ProductActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
     override fun onResume() {
         super.onResume()
         if (Utils().islogin(this)) {
@@ -277,5 +282,9 @@ class ProductActivity : AppCompatActivity() {
 
         }
 
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

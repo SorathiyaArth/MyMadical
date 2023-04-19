@@ -72,10 +72,9 @@ interface AddToCartInterface {
     @FormUrlEncoded
     @POST("cart_add_quntity.php")
     fun insertdata(
-
         @Field("user_id") user_id: String?,
         @Field("product_id") product_id: String?,
-        @Field("quantity") quantity: String?
+        @Field("type") type: String?
     ): Call<ModelCartaddInfo>
 
 

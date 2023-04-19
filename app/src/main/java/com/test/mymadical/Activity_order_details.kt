@@ -2,6 +2,8 @@ package com.test.mymadical
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +31,7 @@ class Activity_order_details : AppCompatActivity() {
     lateinit var txtTotalGst: TextView
     lateinit var txtFinalMrp: TextView
     lateinit var recyclerView: RecyclerView
+    lateinit var llMain: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_details)
@@ -54,8 +57,9 @@ class Activity_order_details : AppCompatActivity() {
                 response: Response<ModelOrederDetails>
             ) {
                 if (response.isSuccessful) {
+                    txtOrderId.text="Order Id "+orderId
+                    llMain.visibility = View.VISIBLE
                     val orderaddress = response.body()?.address
-
                     txtName1.text = orderaddress?.name.toString()
                     txtMobile1.text = orderaddress?.number.toString()
                     txtAddress1.text =
@@ -70,7 +74,7 @@ class Activity_order_details : AppCompatActivity() {
                     txtFinalMrp.text = "₹" + response.body()?.valueTotal
                     val mAdepter =
                         AdepterOrderDetails(
-                            response.body()?.productDetails as ArrayList<ProductDetailsItem>,
+                            response.body()!!.productDetails as ArrayList<ProductDetailsItem>,
                             baseContext
                         )
                     recyclerView.adapter = mAdepter
@@ -104,9 +108,14 @@ class Activity_order_details : AppCompatActivity() {
         txtTotalGst = findViewById(R.id.txtTotalGst)
         txtFinalMrp = findViewById(R.id.txtFinalMrp)
         recyclerView = findViewById(R.id.recyclerView)
+        llMain = findViewById(R.id.llMain)
     }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

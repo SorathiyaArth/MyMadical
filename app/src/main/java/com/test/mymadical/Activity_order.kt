@@ -41,7 +41,7 @@ class Activity_order : AppCompatActivity() {
         linearLayoutManager.reverseLayout = true
         linearLayoutManager.stackFromEnd = true
         RvMyOrder.setLayoutManager(linearLayoutManager)
-       // RvMyOrder.layoutManager = GridLayoutManager(this, 1)
+        // RvMyOrder.layoutManager = GridLayoutManager(this, 1)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         val preferences: SharedPreferences = this.getSharedPreferences(main_key, MODE_PRIVATE)
@@ -88,17 +88,19 @@ class Activity_order : AppCompatActivity() {
                             override fun onclicked12(position: Int, Types: Int) {
                                 if (Types == 1) {
                                     val intent =
-                                        Intent(this@Activity_order, Activity_order_details::class.java)
-                                    intent.putExtra("orderid",listorder.get(position).orderId)
+                                        Intent(
+                                            this@Activity_order,
+                                            Activity_order_details::class.java
+                                        )
+                                    intent.putExtra("orderid", listorder.get(position).orderId)
                                     startActivity(intent)
                                 }
                             }
                         })
 
-                    }else{
+                    } else {
                         lyt_not_found.visibility = View.VISIBLE
                     }
-
 
 
                 }
@@ -114,5 +116,17 @@ class Activity_order : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (intent.getStringExtra("from").equals("order")) {
+            val intent = Intent(this@Activity_order, Dashboard::class.java)
+            startActivity(intent)
+            finishAffinity()
+        } else {
+            finish()
+
+        }
     }
 }

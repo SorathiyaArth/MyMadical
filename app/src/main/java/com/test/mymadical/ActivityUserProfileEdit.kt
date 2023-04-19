@@ -103,4 +103,8 @@ edtEmail.setText(sherdemail)
         }
         return isstudentnamevalid
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

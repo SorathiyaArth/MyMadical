@@ -15,9 +15,11 @@
         >
 
         <LinearLayout
+            android:id="@+id/llMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="gone"
             android:paddingLeft="@dimen/_6sdp"
             android:paddingRight="@dimen/_6sdp">
 

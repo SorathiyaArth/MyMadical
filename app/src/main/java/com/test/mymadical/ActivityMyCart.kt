@@ -152,9 +152,10 @@ class ActivityMyCart : AppCompatActivity() {
                 call: Call<ModelCartDisplayInfo>,
                 response: Response<ModelCartDisplayInfo>
             ) {
+                AlertDialog.dismiss()
+
                 if (response.isSuccessful) {
                     Rv_mycart.isVisible = true
-                    AlertDialog.dismiss()
                      total = response.body()!!.cartItem?.carttotal.toString()
                     val item = response.body()!!.cartItem?.cartitem
                     tvtotal.text = "Total : ₹ " + total
@@ -283,6 +284,10 @@ class ActivityMyCart : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }
 

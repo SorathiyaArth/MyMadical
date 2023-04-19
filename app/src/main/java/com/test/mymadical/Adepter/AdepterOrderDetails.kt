@@ -25,7 +25,7 @@ class AdepterOrderDetails(var listproducts: ArrayList<ProductDetailsItem>, var c
 
     override fun onBindViewHolder(holder: AdepterOrderDetails.ViewHolder, position: Int) {
         val orderdetails = listproducts[position]
-        Glide.with(context).load(orderdetails.productImage).into(holder.imgProductImage)
+        Glide.with(context).load(orderdetails.productImage).error(R.drawable.img_default_user_icon).into(holder.imgProductImage)
         holder.txtProductName.text = orderdetails.productName
         holder.txtUnitPrice.text = "₹" +orderdetails.price
         holder.txtQuntityCount.text = orderdetails.quntity

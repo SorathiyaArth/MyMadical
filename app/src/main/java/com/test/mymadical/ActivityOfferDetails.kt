@@ -57,4 +57,8 @@ class ActivityOfferDetails : AppCompatActivity() {
         onBackPressed()
         return true
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

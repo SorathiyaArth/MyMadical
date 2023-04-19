@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -13,17 +14,25 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.helper.widget.MotionEffect
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
+import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
+import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
 import com.test.mymadical.Interface.GetUserLoginInterface
 import com.test.mymadical.model.ModelLoginInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
     lateinit var tvsingup: TextView
     lateinit var etnumber: EditText
     lateinit var btnlogin: Button
-
+    private var mAuth: FirebaseAuth? = null
+    var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -31,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         etnumber = findViewById(R.id.etnumber)
         btnlogin = findViewById(R.id.btnlogin)
 
+        mAuth = FirebaseAuth.getInstance()
 
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
@@ -88,6 +98,9 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     AlertDialog.dismiss()
                     if (response.body()?.flag == "1") {
+asd()
+
+
                         val otpPIN = (Math.random() * 9000).toInt() + 1000
 
                         val intent = Intent(this@LoginActivity, OtpActivity::class.java)
@@ -116,6 +129,51 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
+    private fun asd() {
+        mCallbacks = object : OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                Log.d(MotionEffect.TAG, "onVerificationCompleted:$credential")
+                val code = credential.smsCode
+
+            }
+
+            override fun onVerificationFailed(e: FirebaseException) {
+                Log.w(MotionEffect.TAG, "onVerificationFailed", e)
+                if (e is FirebaseAuthInvalidCredentialsException) {
+                } else if (e is FirebaseTooManyRequestsException) {
+                }
+            }
+
+            override fun onCodeSent(
+                verificationId: String,
+                token: ForceResendingToken
+            ) {
+
+                var verificationId = verificationId
+                Log.d(MotionEffect.TAG, "onCodeSent:$verificationId")
+                val intent = Intent(this@LoginActivity, OtpActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putParcelable("key", token)
+                mBundle.putString("verificationId", verificationId)
+                    mBundle.putString("phonenumber", etnumber.text.toString())
+                intent.putExtras(mBundle)
+                startActivity(intent)
+
+            }
+        }
+        val options = mAuth?.let {
+            PhoneAuthOptions.newBuilder(it)
+                .setPhoneNumber("+91" + etnumber.text.toString()) // Phone number to verify
+                .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
+                .setActivity(this@LoginActivity) // Activity (for callback binding)
+                .setCallbacks(mCallbacks as OnVerificationStateChangedCallbacks) // OnVerificationStateChangedCallbacks
+                .build()
+        }
+        if (options != null) {
+            PhoneAuthProvider.verifyPhoneNumber(options)
+        }
+    }
+
 
     fun chackstudenmobileno(): Boolean {
 
@@ -134,5 +192,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

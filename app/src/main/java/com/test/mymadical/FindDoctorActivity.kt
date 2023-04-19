@@ -249,4 +249,8 @@ class FindDoctorActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
 
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }
