@@ -38,7 +38,10 @@ data class ModelOrederDetails(
 	val orderId: String? = null,
 
 	@field:SerializedName("status")
-	val status: String? = null
+	val status: String? = null,
+
+	@field:SerializedName("tran_id")
+	val tran_id: String? = null
 )
 
 data class Address(

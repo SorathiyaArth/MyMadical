@@ -1,5 +1,6 @@
 package com.test.mymadical
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -68,8 +69,33 @@ class Activity_order_details : AppCompatActivity() {
                                 "-" + orderaddress?.pincode.toString()
                     txtDate.text = response.body()?.orderDate
                     txtDelDate.text = response.body()?.delivaryDate
+
                     txtStatus.text = response.body()?.status
                     txtPayStatus.text = response.body()?.paymentStatus
+
+
+                    if (response.body()?.status == "PANDIND") {
+                        txtStatus.setTextColor(Color.parseColor("#FF8400"))
+                    } else if (response.body()?.status == "Confirmed") {
+                        txtStatus.setTextColor(Color.parseColor("#5398ec"))
+                    } else if (response.body()?.status == "Canceled") {
+                        txtStatus.setTextColor(Color.parseColor("#E85342"))
+                    } else if (response.body()?.status == "On Delivery") {
+                        txtStatus.setTextColor(Color.parseColor("#448FEA"))
+                    } else if (response.body()?.status == "Delivered") {
+                        txtStatus.setTextColor(Color.parseColor("#33AE10"))
+                    }
+
+                    if (response.body()?.paymentStatus == "PANDIND") {
+                        txtPayStatus.setTextColor(Color.parseColor("#FF8400"))
+                    } else if (response.body()?.paymentStatus == "SCCESSFULL") {
+                        txtPayStatus.setTextColor(Color.parseColor("#33AE10"))
+                    }
+
+
+
+
+
                     txtNetAmount.text = "₹" + response.body()?.valueTotal
                     txtFinalMrp.text = "₹" + response.body()?.valueTotal
                     val mAdepter =

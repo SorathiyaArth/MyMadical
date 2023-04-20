@@ -134,11 +134,12 @@ interface orderplacedInfoInterface {
         @Field("user_id") user_id: String,
         @Field("value_total") value_total: String,
         @Field("status") status: String,
-        @Field("order_date") order_date: String,
+            @Field("order_date") order_date: String,
         @Field("delivary_date") delivary_date: String,
         @Field("address_id") address_id: String,
         @Field("payment_status") payment_status: String,
         @Field("total_item") total_item: String,
+        @Field("tran_id") tran_id: String
 
     ): Call<ModelOrderPlaced>
 

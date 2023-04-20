@@ -15,11 +15,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.helper.widget.MotionEffect
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.*
-import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
-import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
+
+
 import com.test.mymadical.Interface.GetUserLoginInterface
 import com.test.mymadical.model.ModelLoginInfo
 import retrofit2.Call
@@ -31,8 +28,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var tvsingup: TextView
     lateinit var etnumber: EditText
     lateinit var btnlogin: Button
-    private var mAuth: FirebaseAuth? = null
-    var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
+  //  private var mAuth: FirebaseAuth? = null
+    //var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -40,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         etnumber = findViewById(R.id.etnumber)
         btnlogin = findViewById(R.id.btnlogin)
 
-        mAuth = FirebaseAuth.getInstance()
+//        mAuth = FirebaseAuth.getInstance()
 
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
@@ -98,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     AlertDialog.dismiss()
                     if (response.body()?.flag == "1") {
-asd()
+//asd()
 
 
                         val otpPIN = (Math.random() * 9000).toInt() + 1000
@@ -129,8 +126,8 @@ asd()
 
 
     }
-    private fun asd() {
-        mCallbacks = object : OnVerificationStateChangedCallbacks() {
+  /*  private fun asd() {
+        mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 Log.d(MotionEffect.TAG, "onVerificationCompleted:$credential")
                 val code = credential.smsCode
@@ -146,7 +143,7 @@ asd()
 
             override fun onCodeSent(
                 verificationId: String,
-                token: ForceResendingToken
+                token: PhoneAuthProvider.ForceResendingToken
             ) {
 
                 var verificationId = verificationId
@@ -161,20 +158,19 @@ asd()
 
             }
         }
-        val options = mAuth?.let {
-            PhoneAuthOptions.newBuilder(it)
+        val options = PhoneAuthOptions.newBuilder(mAuth!!)
                 .setPhoneNumber("+91" + etnumber.text.toString()) // Phone number to verify
                 .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
                 .setActivity(this@LoginActivity) // Activity (for callback binding)
-                .setCallbacks(mCallbacks as OnVerificationStateChangedCallbacks) // OnVerificationStateChangedCallbacks
+                .setCallbacks(mCallbacks as PhoneAuthProvider.OnVerificationStateChangedCallbacks) // OnVerificationStateChangedCallbacks
                 .build()
-        }
+
         if (options != null) {
             PhoneAuthProvider.verifyPhoneNumber(options)
         }
     }
 
-
+*/
     fun chackstudenmobileno(): Boolean {
 
 

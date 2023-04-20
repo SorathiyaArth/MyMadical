@@ -13,18 +13,22 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.razorpay.Checkout
+import com.razorpay.PaymentResultListener
 import com.test.mymadical.Interface.CouponcodeInfoInterface
 import com.test.mymadical.Interface.orderplacedInfoInterface
 import com.test.mymadical.Utils.Utils
 import com.test.mymadical.model.ModelCouponcodeInfo
 import com.test.mymadical.model.ModelOrderPlaced
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ActivityOrderReview : AppCompatActivity() {
+
+class ActivityOrderReview : AppCompatActivity() , PaymentResultListener {
     var total: String = ""
     var shipping: String = ""
     var CustId: String = ""
@@ -155,13 +159,33 @@ class ActivityOrderReview : AppCompatActivity() {
             if (Utils().isNetworkAvailable(this)) {
                 if (checkdate()) {
                     if (paymentmode == "cod") {
-                        placeorder()
+                        placeorder("PANDING","COD")
                     } else {
-                        Toast.makeText(
-                            this@ActivityOrderReview,
-                            "This Payment method currantly not working",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        val checkout = Checkout()
+                        checkout.setKeyID("rzp_test_7L5zPAWnWZ3JWu")
+
+                        checkout.setImage(R.drawable.logo1)
+                        try {
+                            val options = JSONObject()
+                            options.put("name", name)
+                            options.put("description", "Reference No. #654321")
+                            options.put(
+                                "image",
+                                "https://s3.amazonaws.com/rzp-mobile/images/rzp.png"
+                            )
+                            //            options.put("order_id", "order_DBJOWzybf0sJbb");//from response of step 3.
+                            options.put("theme.color", "#3399cc")
+                            options.put("currency", "INR")
+                            options.put("amount", txtpayableamnt.text.toString().toInt()*100) //pass amount in currency subunits
+                             options.put("prefill.contact", content)
+                            val retryObj = JSONObject()
+                            retryObj.put("enabled", true)
+                            retryObj.put("max_count", 4)
+                            options.put("retry", retryObj)
+                            checkout.open(this, options)
+                        } catch (e: Exception) {
+                            Log.e("TAG", "Error in starting Razorpay Checkout", e)
+                        }
 
                     }
                 }
@@ -175,7 +199,7 @@ class ActivityOrderReview : AppCompatActivity() {
 
     }
 
-    private fun placeorder() {
+    private fun placeorder(paymentstatus: String,s:String) {
 
         val main_key = "my_pref"
         val ucart_key = "cartitemtotal"
@@ -193,7 +217,7 @@ class ActivityOrderReview : AppCompatActivity() {
             txtpayableamnt.text.toString(),
             "PANDIND", currantdate,
             date,
-            addid, "PANDING", cartitemcount.toString()
+            addid, paymentstatus, cartitemcount.toString(),s
         )
 
         call.enqueue(object : Callback<ModelOrderPlaced> {
@@ -268,7 +292,7 @@ intent.putExtra("from","order");
                             val dtotal = total?.toInt() - discount!!
                             txtcoupondis.text = "-" + discount.toString()
                             txtgrndtotal.text = "₹" + dtotal.toString()
-                            txtpayableamnt.text = "₹" + dtotal.toString()
+                            txtpayableamnt.text =  dtotal.toString()
                         }
 
 
@@ -331,5 +355,12 @@ intent.putExtra("from","order");
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
+    }
+
+    override fun onPaymentSuccess(p0: String?) {
+        placeorder("SCCESSFULL",p0!!)    }
+
+    override fun onPaymentError(p0: Int, p1: String?) {
+        TODO("Not yet implemented")
     }
 }
