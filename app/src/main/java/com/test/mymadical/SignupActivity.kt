@@ -125,6 +125,8 @@ class SignupActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ModelLoginInfo>, t: Throwable) {
                 Log.e("ddddddd", t.message.toString())
+                AlertDialog.dismiss()
+
             }
         })
     }

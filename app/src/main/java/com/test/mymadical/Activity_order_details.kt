@@ -1,21 +1,29 @@
 package com.test.mymadical
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.mymadical.Adepter.AdepterOrderDetails
+import com.razorpay.Payment
+import com.razorpay.RazorpayClient
+import com.test.mymadical.Interface.Adepter.AdepterOrderDetails
 import com.test.mymadical.Interface.OrderDetailsInterface
 import com.test.mymadical.model.ModelOrederDetails
 import com.test.mymadical.model.ProductDetailsItem
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class Activity_order_details : AppCompatActivity() {
     lateinit var txtOrderId: TextView
@@ -31,6 +39,7 @@ class Activity_order_details : AppCompatActivity() {
     lateinit var txtSGst: TextView
     lateinit var txtTotalGst: TextView
     lateinit var txtFinalMrp: TextView
+    lateinit var txtPayStatusVia: TextView
     lateinit var recyclerView: RecyclerView
     lateinit var llMain: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,17 +57,32 @@ class Activity_order_details : AppCompatActivity() {
     }
 
     private fun orderdetails() {
+        val progress = LayoutInflater.from(this)
+            .inflate(R.layout.custom_progress_dialog, null)
+
+
+        val builder = AlertDialog.Builder(this)
+            .setView(progress)
+        val AlertDialog = builder.create()
+        AlertDialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        AlertDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+
+        AlertDialog.show()
         val orderId = intent.getStringExtra("orderid")
         val creation: OrderDetailsInterface =
             Retroclient.getSingleTonClient()!!.create(OrderDetailsInterface::class.java)
         val call = creation.getorderdetails(orderId)
         call.enqueue(object : Callback<ModelOrederDetails> {
+
             override fun onResponse(
                 call: Call<ModelOrederDetails>,
                 response: Response<ModelOrederDetails>
             ) {
+                AlertDialog.dismiss()
+
                 if (response.isSuccessful) {
-                    txtOrderId.text="Order Id "+orderId
+                    txtOrderId.text = "Order Id " + orderId
                     llMain.visibility = View.VISIBLE
                     val orderaddress = response.body()?.address
                     txtName1.text = orderaddress?.name.toString()
@@ -105,17 +129,47 @@ class Activity_order_details : AppCompatActivity() {
                         )
                     recyclerView.adapter = mAdepter
 
+                    val paymentId = response.body()?.tran_id
+                    if (!paymentId.equals("COD")) {
+                        val job = SendfeedbackJob()
+                    val p =    job.execute(paymentId).get()
+Log.e("asd","p   "+p)
+                        txtPayStatusVia.text = p.get("method")
+                     }
+
 
                 }
 
             }
 
             override fun onFailure(call: Call<ModelOrederDetails>, t: Throwable) {
+                AlertDialog.dismiss()
+
                 Log.e("onfailorderdetails", t.message.toString())
 
             }
         })
     }
+
+
+
+      class SendfeedbackJob :
+        AsyncTask<String?, Void?, Payment>() {
+        override fun doInBackground(params: Array<String?>): Payment {
+
+            val razorpay = RazorpayClient("rzp_test_BRTY8CDXbNVQS9", "B0CwCJucOUANbDwQlhxdPCiH")
+            val payment: Payment = razorpay.payments.fetch(params[0])
+
+            return payment
+        }
+
+        override fun onPostExecute(message: Payment) {
+            super.onPostExecute(message)
+          }
+
+
+
+      }
 
     private fun ids() {
         txtOrderId = findViewById(R.id.txtOrderId)
@@ -135,11 +189,14 @@ class Activity_order_details : AppCompatActivity() {
         txtFinalMrp = findViewById(R.id.txtFinalMrp)
         recyclerView = findViewById(R.id.recyclerView)
         llMain = findViewById(R.id.llMain)
+        txtPayStatusVia = findViewById(R.id.txtPayStatusVia)
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

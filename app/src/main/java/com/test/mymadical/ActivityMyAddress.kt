@@ -20,7 +20,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidadvance.topsnackbar.TSnackbar
-import com.test.mymadical.Adepter.AdepterMyAddress
+import com.test.mymadical.Interface.Adepter.AdepterMyAddress
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Interface.DeleteAddressInfoInterface
 import com.test.mymadical.Interface.GetAddressInfoInterface

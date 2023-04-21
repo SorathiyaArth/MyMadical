@@ -15,7 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidadvance.topsnackbar.TSnackbar
-import com.test.mymadical.Adepter.AdepterProduct
+import com.test.mymadical.Interface.Adepter.AdepterProduct
 import com.test.mymadical.Interface.AddToCartInterface
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Interface.ProductInterface

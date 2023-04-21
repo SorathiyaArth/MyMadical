@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.mymadical.Adepter.AdepterFindDoctor
+import com.test.mymadical.Interface.Adepter.AdepterFindDoctor
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Utils.Utils
 import java.util.*

@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.mymadical.Adepter.AdepterDoctorDetails
+import com.test.mymadical.Interface.Adepter.AdepterDoctorDetails
 import com.test.mymadical.Interface.DoctorDetailsInterface
 import com.test.mymadical.model.DoctorDetailsTblItem
 import com.test.mymadical.model.ModelDoctorDetails

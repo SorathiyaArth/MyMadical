@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.mymadical.Adepter.AdepterMyOrder
+import com.test.mymadical.Interface.Adepter.AdepterMyOrder
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Interface.OrderDisplayInterface
 import com.test.mymadical.Utils.Utils

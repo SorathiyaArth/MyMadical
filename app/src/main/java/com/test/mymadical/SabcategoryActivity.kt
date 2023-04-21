@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidadvance.topsnackbar.TSnackbar
 import com.bumptech.glide.Glide
-import com.test.mymadical.Adepter.AdepterSubcategory
+import com.test.mymadical.Interface.Adepter.AdepterSubcategory
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Interface.SubcategoryInterface
 import com.test.mymadical.Utils.Utils

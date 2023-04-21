@@ -17,7 +17,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidadvance.topsnackbar.TSnackbar
-import com.test.mymadical.Adepter.AdepterCategorylist
+import com.test.mymadical.Interface.Adepter.AdepterCategorylist
 import com.test.mymadical.Interface.CategoryInterface
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Utils.Utils

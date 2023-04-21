@@ -143,6 +143,7 @@ class ActivityOrderReview : AppCompatActivity() , PaymentResultListener {
             etPaymentCoupencode
             if (Utils().isNetworkAvailable(this)) {
                 iscouponvelid()
+                Utils().hideKeyboard(this)
 
             } else {
                 Utils().showToastShortForNoInternet(this)
@@ -162,7 +163,7 @@ class ActivityOrderReview : AppCompatActivity() , PaymentResultListener {
                         placeorder("PANDING","COD")
                     } else {
                         val checkout = Checkout()
-                        checkout.setKeyID("rzp_test_7L5zPAWnWZ3JWu")
+                        checkout.setKeyID("rzp_test_BRTY8CDXbNVQS9")
 
                         checkout.setImage(R.drawable.logo1)
                         try {
@@ -358,9 +359,13 @@ intent.putExtra("from","order");
     }
 
     override fun onPaymentSuccess(p0: String?) {
-        placeorder("SCCESSFULL",p0!!)    }
+        placeorder("SCCESSFULL",p0!!)
+        Log.e("asd","onPaymentError   "+p0)
+
+    }
 
     override fun onPaymentError(p0: Int, p1: String?) {
-        TODO("Not yet implemented")
-    }
+
+        Log.e("asd","onPaymentError   "+p0+"  p1   "+p1)
+     }
 }

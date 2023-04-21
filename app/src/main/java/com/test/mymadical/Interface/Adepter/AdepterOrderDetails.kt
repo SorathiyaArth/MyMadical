@@ -1,4 +1,4 @@
-package com.test.mymadical.Adepter
+package com.test.mymadical.Interface.Adepter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -23,7 +23,7 @@ class AdepterOrderDetails(var listproducts: ArrayList<ProductDetailsItem>, var c
         return ViewHolder(mView)
     }
 
-    override fun onBindViewHolder(holder: AdepterOrderDetails.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val orderdetails = listproducts[position]
         Glide.with(context).load(orderdetails.productImage).error(R.drawable.img_default_user_icon).into(holder.imgProductImage)
         holder.txtProductName.text = orderdetails.productName

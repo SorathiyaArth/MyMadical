@@ -1,4 +1,4 @@
-package com.test.mymadical.Adepter
+package com.test.mymadical.Interface.Adepter
 
 import android.content.Context
 import android.view.LayoutInflater

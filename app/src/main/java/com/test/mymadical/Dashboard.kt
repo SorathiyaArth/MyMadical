@@ -24,8 +24,8 @@ import androidx.recyclerview.widget.RecyclerView
  import com.androidadvance.topsnackbar.TSnackbar
 import com.bumptech.glide.Glide
  import com.smarteist.autoimageslider.SliderView
-import com.test.mymadical.Adepter.AdepterCategory
-import com.test.mymadical.Adepter.BannerAdepter
+import com.test.mymadical.Interface.Adepter.AdepterCategory
+import com.test.mymadical.Interface.Adepter.BannerAdepter
 import com.test.mymadical.Interface.CategoryInterface
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Utils.Utils

@@ -1,4 +1,4 @@
-package com.test.mymadical.Adepter
+package com.test.mymadical.Interface.Adepter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,16 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.R
+import com.test.mymadical.model.CategoryInfo
+import com.test.mymadical.model.CategoryTblItem
 
-class AdepterFindDoctor(
-    val listdoctor: ArrayList<String>,
-    val listimage: ArrayList<Int>,
-    val context: Context
-) : RecyclerView.Adapter<AdepterFindDoctor.ViewHolder>() {
-
-
+class AdepterCategory(var listcategory: List<CategoryTblItem>, var context: Context) :
+    RecyclerView.Adapter<AdepterCategory.ViewHolder>() {
     var mListener: ClickInterface? = null
-
     fun setOnItemClickListener(clickListener: ClickInterface) {
         mListener = clickListener
     }
@@ -29,30 +25,28 @@ class AdepterFindDoctor(
         val ivcatecory = view.findViewById<ImageView>(R.id.ivcatecory)
         val tvcatecory = view.findViewById<TextView>(R.id.tvcatecory)
         val llcategory = view.findViewById<LinearLayout>(R.id.llcategory)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
+        context =parent.context
         val mView = LayoutInflater.from(context).inflate(R.layout.raw_category,parent,false)
         return ViewHolder(mView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.ivcatecory.setImageResource(listimage[position])
-        holder.tvcatecory.text = listdoctor.get(position)
-
+        val category =listcategory[position]
+        val name = category.categoryName
+        holder.tvcatecory.text = name
+        Glide.with(context).load(category.categoryImage).into(holder.ivcatecory).waitForLayout()
         holder.llcategory.setOnClickListener {
-            mListener?.onclicked12(holder.adapterPosition , 1)
+        mListener?.onclicked12(holder.adapterPosition , 1)
         }
+
 
     }
 
     override fun getItemCount(): Int {
-        return listdoctor.size
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return listdoctor.size
-
+        return listcategory.size
     }
 }

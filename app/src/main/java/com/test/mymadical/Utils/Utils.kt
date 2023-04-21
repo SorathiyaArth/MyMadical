@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.view.Gravity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import com.test.mymadical.R
@@ -109,6 +110,13 @@ class Utils {
         return false
 
     }
-
+    fun hideKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = activity.currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 
 }

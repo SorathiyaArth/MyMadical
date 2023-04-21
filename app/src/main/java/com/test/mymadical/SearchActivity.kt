@@ -22,7 +22,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidadvance.topsnackbar.TSnackbar
-import com.test.mymadical.Adepter.AdepterProduct
+import com.test.mymadical.Interface.Adepter.AdepterProduct
 import com.test.mymadical.Interface.AddToCartInterface
 import com.test.mymadical.Interface.ClickInterface
 import com.test.mymadical.Interface.SearchProductInterface
@@ -73,7 +73,8 @@ class SearchActivity : AppCompatActivity() {
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         val preferences: SharedPreferences = this.getSharedPreferences(main_key, MODE_PRIVATE)
         sherdiscustID = preferences.getString(custID_key, "")
-        cartitemcount = preferences.getString(ucart_key, "")
+        cartitemcount = preferences.getString(ucart_key, "0")
+        Log.e("asd","cartitemcount  "+cartitemcount)
         tvmytotalitems.text =cartitemcount
         tvtitle.setText("My Medical")
 
