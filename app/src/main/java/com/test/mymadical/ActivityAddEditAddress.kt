@@ -4,20 +4,29 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.RequestQueue
+import com.android.volley.toolbox.Volley
 import com.test.mymadical.Interface.PostAddressInfoInterface
 import com.test.mymadical.Utils.Utils
 import com.test.mymadical.model.ModelAddEditAddressInfo
+import com.test.mymadical.model.Root
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+
 
 class ActivityAddEditAddress : AppCompatActivity() {
     lateinit var etname: TextView
@@ -33,7 +42,7 @@ class ActivityAddEditAddress : AppCompatActivity() {
     val custID_key = "custID_key"
     var custid: String = ""
     var types: String = ""
-
+    private var mRequestQueue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +51,10 @@ class ActivityAddEditAddress : AppCompatActivity() {
         addressid = intent.getStringExtra("addid").toString()
         val type = intent.getStringExtra("type").toString()
         Log.e("nvhgcfdxs", type)
+
+
+        mRequestQueue = Volley.newRequestQueue(this);
+
         if (type.equals("update")) {
 
             etname.text = intent.getStringExtra("name").toString()
@@ -66,6 +79,8 @@ class ActivityAddEditAddress : AppCompatActivity() {
             txtAddAddress.text = "Add Address"
 
         }
+
+
 
         txtAddAddress.setOnClickListener {
             if (Utils().isNetworkAvailable(this)) {
@@ -176,6 +191,19 @@ class ActivityAddEditAddress : AppCompatActivity() {
         etcity = findViewById(R.id.etcity)
         etstate = findViewById(R.id.etstate)
         txtAddAddress = findViewById(R.id.txtAddAddress)
+
+
+        etPincode.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                if (s.length == 6) {
+                    Apicall(etPincode.text.toString());
+                }
+
+            }
+        })
+
     }
 
 
@@ -264,8 +292,34 @@ class ActivityAddEditAddress : AppCompatActivity() {
         }
         return isstudentnamevalid
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
     }
+}
+
+class Apicall(Pincode: String) {
+    val baseurl ="http://www.postalpincode.in/api/pincode/$Pincode"
+
+    val retrofitBuilder = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(baseurl)
+        .build()
+        .create(APIInterface::class.java)
+
+
+
+    val retrofitData = retrofitBuilder.doGetListResources()
+    retrofitData.enqueue(object : Callback<Root> {
+
+    })
+
+
+
+}
+
+interface APIInterface {
+    @GET(".")
+    fun doGetListResources(): Call<Root?>?
 }

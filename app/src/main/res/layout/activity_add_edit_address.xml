@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,10 +13,12 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputname"
                 android:layout_width="match_parent"
@@ -27,20 +28,22 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp">
+
                 <EditText
                     android:id="@+id/etname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="7dp"
                     android:background="@color/white"
+                    android:hint="Name"
                     android:inputType="text"
                     android:maxLines="1"
                     android:scrollbarStyle="insideInset"
-                    android:scrollbars="vertical"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginRight="5dp"
-                    android:hint="Name" />
+                    android:scrollbars="vertical" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputnumber"
                 android:layout_width="match_parent"
@@ -50,19 +53,21 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp">
+
                 <EditText
                     android:id="@+id/etnumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@color/white"
+                    android:hint="Contact No"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:maxLines="1"
-                    android:background="@color/white"
-                    android:hint="Contact No" />
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputaddress"
                 android:layout_width="match_parent"
@@ -72,19 +77,21 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp">
+
                 <EditText
                     android:id="@+id/etaddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@color/white"
+                    android:hint="Address"
                     android:inputType="textPostalAddress"
                     android:maxLines="4"
-                    android:minLines="2"
-                    android:hint="Address" />
+                    android:minLines="2" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputArea"
                 android:layout_width="match_parent"
@@ -94,18 +101,20 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp">
+
                 <EditText
                     android:id="@+id/etArea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@color/white"
+                    android:hint="Area"
                     android:inputType="textPostalAddress"
-                    android:maxLines="1"
-                    android:hint="Area" />
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputPinCode"
                 android:layout_width="match_parent"
@@ -119,16 +128,17 @@
                 <EditText
                     android:id="@+id/etPincode"
                     android:layout_width="match_parent"
-                    android:background="@color/white"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@color/white"
+                    android:hint="Enter Pincode"
                     android:inputType="number"
                     android:maxLength="6"
-                    android:singleLine="true"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginRight="5dp"
-                    android:hint="Enter Pincode" />
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputcity"
                 android:layout_width="match_parent"
@@ -146,13 +156,15 @@
                     android:layout_marginTop="7dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="7dp"
+                    android:background="@color/white"
+                    android:editable="false"
+                    android:hint="Enter City"
                     android:inputType="textPostalAddress"
                     android:longClickable="false"
                     android:maxLength="100"
-                    android:singleLine="true"
-                    android:background="@color/white"
-                    android:hint="Enter City" />
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputstate"
                 android:layout_width="match_parent"
@@ -162,19 +174,21 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp">
+
                 <EditText
                     android:id="@+id/etstate"
                     android:layout_width="match_parent"
-                    android:background="@color/white"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@color/white"
+                    android:editable="false"
+                    android:hint="Enter State"
                     android:inputType="textPostalAddress"
                     android:longClickable="false"
                     android:maxLength="100"
-                    android:singleLine="true"
-                    android:hint="Enter State" />
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

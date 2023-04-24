@@ -1,9 +1,10 @@
 package com.test.mymadical
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,17 +13,18 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import com.test.mymadical.Interface.SignupUserInterface
 import com.test.mymadical.model.ModelLoginInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.String
-import java.util.zip.CRC32
+
 
 class SignupActivity : AppCompatActivity() {
     lateinit var tvlogin: TextView
+    lateinit var tvterms: TextView
     lateinit var etname: TextView
     lateinit var etnumber: TextView
     lateinit var scrolldashboard: NestedScrollView
@@ -35,6 +37,7 @@ class SignupActivity : AppCompatActivity() {
         tvlogin = findViewById(R.id.tvlogin)
         etname = findViewById(R.id.etname)
         etnumber = findViewById(R.id.etnumber)
+        tvterms = findViewById(R.id.tvterms)
         etrefer = findViewById(R.id.etrefer)
         btnsignup = findViewById(R.id.btnsignup)
         scrolldashboard = findViewById(R.id.scrolldashboard)
@@ -46,12 +49,22 @@ class SignupActivity : AppCompatActivity() {
         tvlogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
+        }
+        tvterms.setOnClickListener {
+            try {
+                val myIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://mymedicalshop.com/terms-and-conditions"))
+                startActivity(myIntent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(
+                    this, "No application can handle this request."
+                            + " Please install a webbrowser", Toast.LENGTH_LONG
+                ).show()
+                e.printStackTrace()
+            }
         }
 
-/*
-        etrefer.setOnClickListener {
-            scrolldashboard.scrollTo(0, scrolldashboard.getBottom());
-        }*/
+
 
 
         btnsignup.setOnClickListener {
@@ -67,16 +80,14 @@ class SignupActivity : AppCompatActivity() {
     private fun signup() {
         Log.e("crc32", "encsignup")
 
-        val otpPIN = (Math.random() * 9000).toInt() + 1000
-        val intent = Intent(this, OtpActivity::class.java)
-        intent.putExtra("otp", otpPIN.toString())
-        intent.putExtra("mobileno", etnumber.text.toString())
-        startActivity(intent)
 
-        val str = etnumber.text.toString()
-        val crc = CRC32()
-        crc.update(str.toByteArray())
-        val enc = String.format("%08X", crc.getValue())
+        val intent1 = Intent(this@SignupActivity, OtpActivity::class.java)
+        intent1.putExtra("otp", "0000")
+        intent1.putExtra("mobileno", etnumber.text.toString())
+        startActivity(intent1)
+
+
+
 
 
     }
@@ -154,7 +165,7 @@ class SignupActivity : AppCompatActivity() {
 
         var isstudentmobileno = false
         if (etnumber.text.toString().trim().length <= 0) {
-            etnumber.error = "Enter Mobile Nomber"
+            etnumber.error = "Enter Mobile Number"
         } else if (etnumber.text.toString().trim().length == 10) {
             isstudentmobileno = true
         } else {

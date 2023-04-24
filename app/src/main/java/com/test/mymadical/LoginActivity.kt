@@ -26,14 +26,17 @@ import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
     lateinit var tvsingup: TextView
+    lateinit var tvdashboard: TextView
     lateinit var etnumber: EditText
     lateinit var btnlogin: Button
-  //  private var mAuth: FirebaseAuth? = null
+
+    //  private var mAuth: FirebaseAuth? = null
     //var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         tvsingup = findViewById(R.id.tvsingup)
+        tvdashboard = findViewById(R.id.tvdashboard)
         etnumber = findViewById(R.id.etnumber)
         btnlogin = findViewById(R.id.btnlogin)
 
@@ -46,6 +49,12 @@ class LoginActivity : AppCompatActivity() {
         tvsingup.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
+            finish()
+        }
+        tvdashboard.setOnClickListener {
+            val intent = Intent(this, Dashboard::class.java)
+            startActivity(intent)
+            finishAffinity()
         }
 
         btnlogin.setOnClickListener {
@@ -126,57 +135,58 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-  /*  private fun asd() {
-        mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                Log.d(MotionEffect.TAG, "onVerificationCompleted:$credential")
-                val code = credential.smsCode
 
-            }
+    /*  private fun asd() {
+          mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+              override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                  Log.d(MotionEffect.TAG, "onVerificationCompleted:$credential")
+                  val code = credential.smsCode
 
-            override fun onVerificationFailed(e: FirebaseException) {
-                Log.w(MotionEffect.TAG, "onVerificationFailed", e)
-                if (e is FirebaseAuthInvalidCredentialsException) {
-                } else if (e is FirebaseTooManyRequestsException) {
-                }
-            }
+              }
 
-            override fun onCodeSent(
-                verificationId: String,
-                token: PhoneAuthProvider.ForceResendingToken
-            ) {
+              override fun onVerificationFailed(e: FirebaseException) {
+                  Log.w(MotionEffect.TAG, "onVerificationFailed", e)
+                  if (e is FirebaseAuthInvalidCredentialsException) {
+                  } else if (e is FirebaseTooManyRequestsException) {
+                  }
+              }
 
-                var verificationId = verificationId
-                Log.d(MotionEffect.TAG, "onCodeSent:$verificationId")
-                val intent = Intent(this@LoginActivity, OtpActivity::class.java)
-                val mBundle = Bundle()
-                mBundle.putParcelable("key", token)
-                mBundle.putString("verificationId", verificationId)
-                    mBundle.putString("phonenumber", etnumber.text.toString())
-                intent.putExtras(mBundle)
-                startActivity(intent)
+              override fun onCodeSent(
+                  verificationId: String,
+                  token: PhoneAuthProvider.ForceResendingToken
+              ) {
 
-            }
-        }
-        val options = PhoneAuthOptions.newBuilder(mAuth!!)
-                .setPhoneNumber("+91" + etnumber.text.toString()) // Phone number to verify
-                .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
-                .setActivity(this@LoginActivity) // Activity (for callback binding)
-                .setCallbacks(mCallbacks as PhoneAuthProvider.OnVerificationStateChangedCallbacks) // OnVerificationStateChangedCallbacks
-                .build()
+                  var verificationId = verificationId
+                  Log.d(MotionEffect.TAG, "onCodeSent:$verificationId")
+                  val intent = Intent(this@LoginActivity, OtpActivity::class.java)
+                  val mBundle = Bundle()
+                  mBundle.putParcelable("key", token)
+                  mBundle.putString("verificationId", verificationId)
+                      mBundle.putString("phonenumber", etnumber.text.toString())
+                  intent.putExtras(mBundle)
+                  startActivity(intent)
 
-        if (options != null) {
-            PhoneAuthProvider.verifyPhoneNumber(options)
-        }
-    }
+              }
+          }
+          val options = PhoneAuthOptions.newBuilder(mAuth!!)
+                  .setPhoneNumber("+91" + etnumber.text.toString()) // Phone number to verify
+                  .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
+                  .setActivity(this@LoginActivity) // Activity (for callback binding)
+                  .setCallbacks(mCallbacks as PhoneAuthProvider.OnVerificationStateChangedCallbacks) // OnVerificationStateChangedCallbacks
+                  .build()
 
-*/
+          if (options != null) {
+              PhoneAuthProvider.verifyPhoneNumber(options)
+          }
+      }
+
+  */
     fun chackstudenmobileno(): Boolean {
 
 
         var isstudentmobileno = false
         if (etnumber.text.toString().trim().length <= 0) {
-            etnumber.error = "Enter Mobile Nomber"
+            etnumber.error = "Enter Mobile Number"
         } else if (etnumber.text.toString().trim().length == 10) {
             isstudentmobileno = true
         } else {
@@ -189,6 +199,7 @@ class LoginActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

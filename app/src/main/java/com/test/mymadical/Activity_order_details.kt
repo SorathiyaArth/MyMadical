@@ -1,5 +1,6 @@
 package com.test.mymadical
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
@@ -8,13 +9,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.razorpay.Payment
 import com.razorpay.RazorpayClient
+import com.razorpay.Refund
 import com.test.mymadical.Interface.Adepter.AdepterOrderDetails
 import com.test.mymadical.Interface.OrderDetailsInterface
 import com.test.mymadical.model.ModelOrederDetails
@@ -30,6 +34,11 @@ class Activity_order_details : AppCompatActivity() {
     lateinit var txtDate: TextView
     lateinit var txtDelDate: TextView
     lateinit var txtStatus: TextView
+    lateinit var txtrefund: TextView
+    lateinit var txtPayStatusViaUPI: TextView
+    lateinit var txtPayStatusViaCard_no: TextView
+    lateinit var txtPayStatusViaCard_type: TextView
+    lateinit var txtPayStatusViaCard_network: TextView
     lateinit var txtPayStatus: TextView
     lateinit var txtName1: TextView
     lateinit var txtAddress1: TextView
@@ -42,6 +51,13 @@ class Activity_order_details : AppCompatActivity() {
     lateinit var txtPayStatusVia: TextView
     lateinit var recyclerView: RecyclerView
     lateinit var llMain: LinearLayout
+    lateinit var card_Payment_detais: CardView
+    lateinit var relative_Card: RelativeLayout
+    lateinit var relative_Upi: RelativeLayout
+      var isrefunded:Boolean = false;
+      var totalbill:Int = 0;
+
+    var PaymentId:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_details)
@@ -75,6 +91,7 @@ class Activity_order_details : AppCompatActivity() {
         val call = creation.getorderdetails(orderId)
         call.enqueue(object : Callback<ModelOrederDetails> {
 
+            @SuppressLint("SetTextI18n")
             override fun onResponse(
                 call: Call<ModelOrederDetails>,
                 response: Response<ModelOrederDetails>
@@ -119,7 +136,7 @@ class Activity_order_details : AppCompatActivity() {
 
 
 
-
+                    totalbill =  response.body()?.valueTotal.toString().toInt()
                     txtNetAmount.text = "₹" + response.body()?.valueTotal
                     txtFinalMrp.text = "₹" + response.body()?.valueTotal
                     val mAdepter =
@@ -129,13 +146,37 @@ class Activity_order_details : AppCompatActivity() {
                         )
                     recyclerView.adapter = mAdepter
 
-                    val paymentId = response.body()?.tran_id
-                    if (!paymentId.equals("COD")) {
+                    PaymentId = response.body()?.tran_id.toString()
+                    if (!PaymentId.equals("COD")) {
+                        card_Payment_detais.visibility = View.VISIBLE
                         val job = SendfeedbackJob()
-                    val p =    job.execute(paymentId).get()
-Log.e("asd","p   "+p)
+                        val p = job.execute(PaymentId).get()
+                        if (p.get<Boolean?>("refund_status").equals("null")){
+                            isrefunded = true
+                        }else{
+                            txtrefund.text = "Refunded"
+                        }
+
+                        Log.e("asd", "p   " + p)
                         txtPayStatusVia.text = p.get("method")
-                     }
+                        if (p.get<Boolean?>("method").equals("upi")) {
+                            relative_Upi.visibility = View.VISIBLE
+                            txtPayStatusViaUPI.text = p.get("vpa")
+
+
+                        } else if (p.get<Boolean?>("method").equals("card")) {
+                            relative_Card.visibility = View.VISIBLE
+                            val qwe = p.get<org.json.JSONObject>("card")
+
+                            txtPayStatusViaCard_type.text = qwe.get("type") as CharSequence?
+                            txtPayStatusViaCard_no.text = "**** **** **** " + qwe.get("last4")
+                            txtPayStatusViaCard_network.text = qwe.get("network") as CharSequence?
+
+
+                        }
+
+
+                    }
 
 
                 }
@@ -152,8 +193,7 @@ Log.e("asd","p   "+p)
     }
 
 
-
-      class SendfeedbackJob :
+    class SendfeedbackJob :
         AsyncTask<String?, Void?, Payment>() {
         override fun doInBackground(params: Array<String?>): Payment {
 
@@ -165,11 +205,10 @@ Log.e("asd","p   "+p)
 
         override fun onPostExecute(message: Payment) {
             super.onPostExecute(message)
-          }
+        }
 
 
-
-      }
+    }
 
     private fun ids() {
         txtOrderId = findViewById(R.id.txtOrderId)
@@ -190,6 +229,56 @@ Log.e("asd","p   "+p)
         recyclerView = findViewById(R.id.recyclerView)
         llMain = findViewById(R.id.llMain)
         txtPayStatusVia = findViewById(R.id.txtPayStatusVia)
+        relative_Upi = findViewById(R.id.relative_Upi)
+        relative_Card = findViewById(R.id.relative_Card)
+        txtPayStatusViaCard_network = findViewById(R.id.txtPayStatusViaCard_network)
+        txtPayStatusViaCard_type = findViewById(R.id.txtPayStatusViaCard_type)
+        txtPayStatusViaCard_no = findViewById(R.id.txtPayStatusViaCard_no)
+        txtPayStatusViaUPI = findViewById(R.id.txtPayStatusViaUPI)
+        card_Payment_detais = findViewById(R.id.card_Payment_detais)
+        txtrefund = findViewById(R.id.txtrefund)
+
+
+        txtrefund.setOnClickListener {
+            if (isrefunded){
+                val job = Refund()
+                val p = job.execute(PaymentId,totalbill.toString()).get()
+                isrefunded = false
+                txtrefund.text= "Refunded"
+                finish()
+                Log.e("asd","refund    "+p)
+            }
+        }
+
+    }
+
+
+
+
+    class Refund :
+        AsyncTask<String?, Void?, com.razorpay.Refund?>() {
+        override fun doInBackground(params: Array<String?>): com.razorpay.Refund? {
+            val refundRequest = JSONObject()
+            val amount = params[1].toString().toInt() * 100
+            refundRequest.put("amount", amount)
+            refundRequest.put("currency", "INR")
+            val notes = JSONObject()
+            notes.put("notes_key_1", "Tea, Earl Grey, Hot")
+            notes.put("notes_key_2", "Tea, Earl Grey… decaf.")
+            refundRequest.put("notes", notes)
+            refundRequest.put("receipt", "Receipt No. #31")
+
+            val razorpay = RazorpayClient("rzp_test_BRTY8CDXbNVQS9", "B0CwCJucOUANbDwQlhxdPCiH")
+            val payment: com.razorpay.Refund? = razorpay.payments.refund(params[0], refundRequest)
+
+            return payment
+        }
+
+        override fun onPostExecute(message: com.razorpay.Refund?) {
+            super.onPostExecute(message)
+        }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +15,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.razorpay.Checkout
+import com.razorpay.Payment
 import com.razorpay.PaymentResultListener
+import com.razorpay.RazorpayClient
 import com.test.mymadical.Interface.CouponcodeInfoInterface
 import com.test.mymadical.Interface.orderplacedInfoInterface
 import com.test.mymadical.Utils.Utils
@@ -359,6 +362,10 @@ intent.putExtra("from","order");
     }
 
     override fun onPaymentSuccess(p0: String?) {
+
+        val job = SendfeedbackJob()
+        val p = job.execute(p0,txtpayableamnt.text.toString()).get()
+
         placeorder("SCCESSFULL",p0!!)
         Log.e("asd","onPaymentError   "+p0)
 
@@ -368,4 +375,28 @@ intent.putExtra("from","order");
 
         Log.e("asd","onPaymentError   "+p0+"  p1   "+p1)
      }
+
+
+
+    class SendfeedbackJob :
+        AsyncTask<String?, Void?, Payment>() {
+        override fun doInBackground(params: Array<String?>): Payment {
+
+            val paymentRequest = JSONObject()
+            val amount = params[1].toString().toInt()*100
+            paymentRequest.put("amount", amount)
+            paymentRequest.put("currency", "INR")
+
+            val razorpay = RazorpayClient("rzp_test_BRTY8CDXbNVQS9", "B0CwCJucOUANbDwQlhxdPCiH")
+            val payment: Payment = razorpay.payments.capture(params[0],paymentRequest)
+
+            return payment
+        }
+
+        override fun onPostExecute(message: Payment) {
+            super.onPostExecute(message)
+        }
+
+
+    }
 }

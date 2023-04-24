@@ -109,7 +109,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="80dp"
             android:layout_marginTop="440dp"
-            android:text="Sign Up"
+            android:text="SignUp"
             android:textAllCaps="false"
             android:textSize="23sp" />
 
