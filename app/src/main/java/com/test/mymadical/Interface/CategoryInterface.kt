@@ -87,6 +87,13 @@ interface GetAddressInfoInterface {
         @Field("user_id") user_id: String
     ): Call<ModelAddressDisplayInfo>
 
+}interface GetRefundedInterface{
+    @FormUrlEncoded
+    @POST("display_my_address.php")
+    fun getrefund(
+        @Field("order_id") order_id: String
+    ): Call<ModelAddEditAddressInfo>
+
 }
 
 interface PostAddressInfoInterface {

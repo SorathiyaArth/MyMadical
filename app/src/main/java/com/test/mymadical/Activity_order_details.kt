@@ -16,11 +16,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.androidadvance.topsnackbar.TSnackbar
 import com.razorpay.Payment
 import com.razorpay.RazorpayClient
 import com.razorpay.Refund
 import com.test.mymadical.Interface.Adepter.AdepterOrderDetails
+import com.test.mymadical.Interface.GetRefundedInterface
 import com.test.mymadical.Interface.OrderDetailsInterface
+import com.test.mymadical.Utils.Utils
+import com.test.mymadical.model.ModelAddEditAddressInfo
 import com.test.mymadical.model.ModelOrederDetails
 import com.test.mymadical.model.ProductDetailsItem
 import org.json.JSONObject
@@ -54,10 +58,10 @@ class Activity_order_details : AppCompatActivity() {
     lateinit var card_Payment_detais: CardView
     lateinit var relative_Card: RelativeLayout
     lateinit var relative_Upi: RelativeLayout
-      var isrefunded:Boolean = false;
-      var totalbill:Int = 0;
+    var isrefunded: Boolean = false;
+    var totalbill: Int = 0;
 
-    var PaymentId:String = ""
+    var PaymentId: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_details)
@@ -135,7 +139,7 @@ class Activity_order_details : AppCompatActivity() {
 
 
 
-                    totalbill =  response.body()?.valueTotal.toString().toInt()
+                    totalbill = response.body()?.valueTotal.toString().toInt()
                     txtNetAmount.text = "₹" + response.body()?.valueTotal
                     txtFinalMrp.text = "₹" + response.body()?.valueTotal
                     val mAdepter =
@@ -150,9 +154,9 @@ class Activity_order_details : AppCompatActivity() {
                         card_Payment_detais.visibility = View.VISIBLE
                         val job = SendfeedbackJob()
                         val p = job.execute(PaymentId).get()
-                        if (p.get<Boolean?>("refund_status").equals("null")){
+                        if (p.get<Boolean?>("refund_status").equals("null")) {
                             isrefunded = true
-                        }else{
+                        } else {
                             txtrefund.text = "Refunded"
                         }
 
@@ -239,19 +243,90 @@ class Activity_order_details : AppCompatActivity() {
 
 
         txtrefund.setOnClickListener {
-            if (isrefunded){
-                val job = Refund()
-                val p = job.execute(PaymentId,totalbill.toString()).get()
-                isrefunded = false
-                txtrefund.text= "Refunded"
-                finish()
-                Log.e("asd","refund    "+p)
+            if (isrefunded) {
+
+
+                if (Utils().isNetworkAvailable(this)) {
+                    refundapicall()
+                } else {
+                    Utils().showToastShortForNoInternet(this)
+                    val snackbar: TSnackbar = TSnackbar
+                        .make(
+                            txtName1,
+                            "Please Check your Internet Connection",
+                            TSnackbar.LENGTH_INDEFINITE
+                        )
+                        .setAction("OK", object : View.OnClickListener {
+                            override fun onClick(v: View?) {
+                                finish();
+                                startActivity(getIntent())
+                            }
+
+                        })
+                    snackbar.setActionTextColor(Color.BLACK)
+                    val snackbarView: View = snackbar.view
+                    snackbarView.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+                    val textView =
+                        snackbarView.findViewById(R.id.snackbar_text) as TextView
+                    textView.setTextColor(Color.BLACK)
+                    snackbar.show()
+                }
+
+
             }
         }
 
     }
 
+    private fun refundapicall() {
 
+        val job = Refund()
+        val p = job.execute(PaymentId, totalbill.toString()).get()
+
+        Log.e("asd", "refund    " + p)
+
+
+
+        val progress = LayoutInflater.from(this)
+            .inflate(R.layout.custom_progress_dialog, null)
+
+
+        val builder = AlertDialog.Builder(this)
+            .setView(progress)
+        val AlertDialog = builder.create()
+        AlertDialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        AlertDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+
+        AlertDialog.show()
+
+
+        val orderId = intent.getStringExtra("orderid")
+        val creation: GetRefundedInterface =
+            Retroclient.getSingleTonClient()!!.create(GetRefundedInterface::class.java)
+        val call = creation.getrefund(orderId!!)
+
+        call.enqueue(object : Callback<ModelAddEditAddressInfo> {
+            override fun onResponse(
+                call: Call<ModelAddEditAddressInfo>,
+                response: Response<ModelAddEditAddressInfo>
+            ) {
+                AlertDialog.dismiss()
+
+                isrefunded = false
+                txtrefund.text = "Refunded"
+                finish()
+            }
+
+            override fun onFailure(call: Call<ModelAddEditAddressInfo>, t: Throwable) {
+
+                AlertDialog.dismiss()
+
+            }
+        })
+
+
+    }
 
 
     class Refund :

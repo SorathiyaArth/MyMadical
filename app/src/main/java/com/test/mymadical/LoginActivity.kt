@@ -15,6 +15,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.helper.widget.MotionEffect
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
 
 
 import com.test.mymadical.Interface.GetUserLoginInterface
@@ -30,8 +33,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var etnumber: EditText
     lateinit var btnlogin: Button
 
-    //  private var mAuth: FirebaseAuth? = null
-    //var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
+      private var mAuth: FirebaseAuth? = null
+    var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -40,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         etnumber = findViewById(R.id.etnumber)
         btnlogin = findViewById(R.id.btnlogin)
 
-//        mAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
 
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
@@ -104,15 +107,15 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     AlertDialog.dismiss()
                     if (response.body()?.flag == "1") {
-//asd()
+asd()
 
 
                         val otpPIN = (Math.random() * 9000).toInt() + 1000
 
-                        val intent = Intent(this@LoginActivity, OtpActivity::class.java)
+                       /* val intent = Intent(this@LoginActivity, OtpActivity::class.java)
                         intent.putExtra("otp", otpPIN.toString())
                         intent.putExtra("mobileno", etnumber.text.toString())
-                        startActivity(intent)
+                        startActivity(intent)*/
                     } else {
                         Toast.makeText(
                             this@LoginActivity,
@@ -136,7 +139,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    /*  private fun asd() {
+     private fun asd() {
           mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
               override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                   Log.d(MotionEffect.TAG, "onVerificationCompleted:$credential")
@@ -180,7 +183,7 @@ class LoginActivity : AppCompatActivity() {
           }
       }
 
-  */
+
     fun chackstudenmobileno(): Boolean {
 
 

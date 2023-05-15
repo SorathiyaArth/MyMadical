@@ -15,6 +15,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.helper.widget.MotionEffect
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
 
 
 import com.test.mymadical.Interface.GetUserInfoInterface
@@ -33,10 +37,10 @@ class OtpActivity : AppCompatActivity() {
     var fromloginotp: String = ""
     var mobileno: String = ""
     var verificationId: String = ""
-  //  private var mAuth: FirebaseAuth? = null
+    private var mAuth: FirebaseAuth? = null
 var resendclick:Boolean = false
- //  var token: PhoneAuthProvider.ForceResendingToken? = null
- //   var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
+   var token: PhoneAuthProvider.ForceResendingToken? = null
+    var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,16 +51,15 @@ var resendclick:Boolean = false
         tvDashBoard = findViewById(R.id.tvDashBoard)
         txt_resend = findViewById(R.id.txt_resend)
 
-    //    mAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
 
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         fromloginotp = intent.getStringExtra("otp").toString()
-        mobileno = intent.getStringExtra("mobileno").toString()
-//        verificationId = intent.getStringExtra("verificationId")!!
-      //  token = intent.getParcelableExtra("key")
-        Toast.makeText(this, fromloginotp, Toast.LENGTH_SHORT).show()
-        object : CountDownTimer(60000, 1000) {
+        mobileno = intent.getStringExtra("phonenumber").toString()
+        verificationId = intent.getStringExtra("verificationId")!!
+        token = intent.getParcelableExtra("key")
+         object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val dsf = millisUntilFinished / 1000
                 val text1 = "<font color=#000000>Resend code in </font>"
@@ -79,7 +82,7 @@ var resendclick:Boolean = false
         txt_resend.setOnClickListener {
             if (resendclick){
                 resendclick = false
-               //   resendVerificationCode("", token)
+                token?.let { it1 -> resendVerificationCode("", it1) }
             }
         }
 
@@ -95,8 +98,8 @@ var resendclick:Boolean = false
                 val Otpfromedt = otp_view.otp
                 if (Otpfromedt!!.length == 6) {
                     val otpbyuser: Int = Otpfromedt!!.toInt()
-                  //  verifyCode(otpbyuser.toString())
-                    ApiCall()
+                    verifyCode(otpbyuser.toString())
+                   // ApiCall()
                 }else{
                     Toast.makeText(this@OtpActivity, "Please Enter OTP", Toast.LENGTH_SHORT).show()
 
@@ -110,7 +113,6 @@ var resendclick:Boolean = false
 
     }
 
-/*
     private fun resendVerificationCode(phoneNumber: String, token: PhoneAuthProvider.ForceResendingToken) {
         mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
@@ -182,7 +184,6 @@ var resendclick:Boolean = false
                     }
                 })
     }
-*/
 
     private fun ApiCall() {
         val progress = LayoutInflater.from(this)

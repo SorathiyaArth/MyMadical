@@ -14,12 +14,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.helper.widget.MotionEffect
 import androidx.core.widget.NestedScrollView
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
+import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
+import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
 import com.test.mymadical.Interface.SignupUserInterface
 import com.test.mymadical.model.ModelLoginInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.TimeUnit
 
 
 class SignupActivity : AppCompatActivity() {
@@ -31,9 +38,16 @@ class SignupActivity : AppCompatActivity() {
     lateinit var etrefer: TextView
     lateinit var btnsignup: Button
     lateinit var cbterms: CheckBox
+    private var mAuth: FirebaseAuth? = null
+    var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+
+        mAuth = FirebaseAuth.getInstance()
+
         tvlogin = findViewById(R.id.tvlogin)
         etname = findViewById(R.id.etname)
         etnumber = findViewById(R.id.etnumber)
@@ -120,7 +134,8 @@ class SignupActivity : AppCompatActivity() {
 
                     Log.e("jjjjj4", response.body()?.message.toString())
                     if (response.body()?.flag!!.equals("1")) {
-                        signup()
+                       // signup()
+                        asd()
                         Log.e("crc32", "enc")
 
                     } else {
@@ -189,4 +204,45 @@ class SignupActivity : AppCompatActivity() {
         super.onBackPressed()
         finish()
     }
+
+
+    private fun asd() {
+        mCallbacks = object : OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                Log.d(MotionEffect.TAG, "onVerificationCompleted:$credential")
+                val code = credential.smsCode
+            }
+
+            override fun onVerificationFailed(e: FirebaseException) {
+                Log.w(MotionEffect.TAG, "onVerificationFailed", e)
+                if (e is FirebaseAuthInvalidCredentialsException) {
+                } else if (e is FirebaseTooManyRequestsException) {
+                }
+            }
+
+            override fun onCodeSent(
+                verificationId: String,
+                token: ForceResendingToken
+            ) {
+                var verificationId = verificationId
+                 Log.d(MotionEffect.TAG, "onCodeSent:$verificationId")
+                val intent = Intent(this@SignupActivity, OtpActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putParcelable("key", token)
+                mBundle.putString("verificationId", verificationId)
+                mBundle.putString("phonenumber", etnumber.getText().toString())
+                intent.putExtras(mBundle)
+                startActivity(intent)
+                verificationId = verificationId
+            }
+        }
+        val options = PhoneAuthOptions.newBuilder(mAuth!!)
+            .setPhoneNumber("+91" + etnumber.getText().toString()) // Phone number to verify
+            .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
+            .setActivity(this@SignupActivity) // Activity (for callback binding)
+            .setCallbacks(mCallbacks as OnVerificationStateChangedCallbacks) // OnVerificationStateChangedCallbacks
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
 }
