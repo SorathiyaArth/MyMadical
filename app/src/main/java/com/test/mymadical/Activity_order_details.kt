@@ -135,7 +135,6 @@ class Activity_order_details : AppCompatActivity() {
 
 
 
-
                     totalbill =  response.body()?.valueTotal.toString().toInt()
                     txtNetAmount.text = "₹" + response.body()?.valueTotal
                     txtFinalMrp.text = "₹" + response.body()?.valueTotal

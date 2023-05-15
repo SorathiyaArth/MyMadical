@@ -197,7 +197,7 @@ class ActivityAddEditAddress : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                if (s.length == 6) {
+                if (etPincode.text.length == 6) {
                     Apicall(etPincode.text.toString());
                 }
 
@@ -274,8 +274,9 @@ class ActivityAddEditAddress : AppCompatActivity() {
 
         var isstudentnamevalid = false
         if (st_name.text.toString().trim().length <= 0) {
-            st_name.error = "Enter city"
-        } else {
+            Toast.makeText(this@ActivityAddEditAddress, "Enter Valid Pincode for city", Toast.LENGTH_SHORT).show()
+
+         } else {
             isstudentnamevalid = true
         }
         return isstudentnamevalid
@@ -286,7 +287,7 @@ class ActivityAddEditAddress : AppCompatActivity() {
 
         var isstudentnamevalid = false
         if (st_name.text.toString().trim().length <= 0) {
-            st_name.error = "Enter state"
+            Toast.makeText(this@ActivityAddEditAddress, "Enter Valid Pincode for state", Toast.LENGTH_SHORT).show()
         } else {
             isstudentnamevalid = true
         }
@@ -297,29 +298,48 @@ class ActivityAddEditAddress : AppCompatActivity() {
         super.onBackPressed()
         finish()
     }
+
+    fun Apicall(Pincode: String) {
+        val baseurl = "http://www.postalpincode.in/api/pincode/$Pincode/"
+
+        val retrofitBuilder = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(baseurl)
+            .build()
+            .create(APIInterface::class.java)
+
+
+        val retrofitData = retrofitBuilder.doGetListResources()
+        retrofitData.enqueue(object : Callback<Root> {
+            override fun onResponse(call: Call<Root>, response: Response<Root>) {
+                if (response.body()!!.status.equals("Success")){
+                    if (response.body()!!.postOffice!!.get(0).state.equals("Gujarat")) {
+                        etcity.text = response.body()!!.postOffice!!.get(0).district
+                        etstate.text = response.body()!!.postOffice!!.get(0).state
+                    }else{
+                        Toast.makeText(this@ActivityAddEditAddress, "Pincode is Out of the state", Toast.LENGTH_SHORT).show()
+
+                    }
+                }else{
+                    Toast.makeText(this@ActivityAddEditAddress, "Pincode is wrong", Toast.LENGTH_SHORT).show()
+
+                }
+
+             }
+
+            override fun onFailure(call: Call<Root>, t: Throwable) {
+                Log.e("asd","retrofitData  "+t.message)
+                Toast.makeText(this@ActivityAddEditAddress, "Failed to fetch Address details", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+
+    }
 }
 
-class Apicall(Pincode: String) {
-    val baseurl ="http://www.postalpincode.in/api/pincode/$Pincode"
-
-    val retrofitBuilder = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(baseurl)
-        .build()
-        .create(APIInterface::class.java)
-
-
-
-    val retrofitData = retrofitBuilder.doGetListResources()
-    retrofitData.enqueue(object : Callback<Root> {
-
-    })
-
-
-
-}
 
 interface APIInterface {
     @GET(".")
-    fun doGetListResources(): Call<Root?>?
+    fun doGetListResources(): Call<Root>
 }

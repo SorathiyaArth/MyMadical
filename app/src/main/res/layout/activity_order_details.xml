@@ -604,7 +604,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_17sdp"
                 android:paddingBottom="100dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/_1sdp"
                 app:cardElevation="@dimen/_1sdp"
                 app:cardPreventCornerOverlap="false"
